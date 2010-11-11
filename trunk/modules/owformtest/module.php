@@ -5,5 +5,8 @@ $Module = array( 'name' => 'owFormTest',
 
 $ViewList = array();
 
-
+$ViewList['sendtofriend'] = array(
+    'script' => 'sendtofriend.php',
+    'params' => array(),
+);
 ?>
