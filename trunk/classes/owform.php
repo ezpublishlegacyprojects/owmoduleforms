@@ -1,6 +1,8 @@
 <?php
 
-abstract class owForm
+require_once 'kernel/common/template.php';
+
+abstract class owForm extends owFormContainer
 {
    const FORM_GET_METHOD = 'get';
    const FORM_LOADED_STATUS = 'loaded';
@@ -11,19 +13,18 @@ abstract class owForm
    var $tpl;
    var $method;
    var $errors;
-   var $form_elements;
    var $status;
    
-   function __construct()
+   function __construct($name)
    {
+      parent::__construct($name);
       $this->status = self::FORM_LOADED_STATUS;
       $this->errors = array();
-      $this->form_elements = array();
       $this->method = self::FORM_GET_METHOD; 
       $this->http = eZHTTPTool::instance();
-      $this->tpl = templateInit();
+      $this->tpl = eZTemplate::factory();
       $this->init();
-      $this->display();
+      $this->initFormButtons();
    }
       
    function getParameterValue($name)
@@ -63,8 +64,6 @@ abstract class owForm
    
    abstract function init();
    
-   abstract function customValidate();
-   
    abstract function process();
    
    abstract function displayValidation();
@@ -72,7 +71,6 @@ abstract class owForm
    function submit()
    {
       $this->validate();
-      $this->customValidate();
       if ($this->isFormValid())
       {
          $this->status = self::FORM_VALIDATED_STATUS;
@@ -85,13 +83,23 @@ abstract class owForm
       $this->display();
    }
    
+   function isSubmitted()
+   {
+      return self::FORM_SUBMITTED_STATUS == $this->status;
+   }
+   
+   function isValidated()
+   {
+      return self::FORM_VALIDATED_STATUS == $this->status;
+   }
+   
    function display()
    {
-      if (self::FORM_VALIDATED_STATUS == $this->status)
+      if ($this->isValidated())
       {
          $this->tpl->setVariable('validation', $this->displayValidation());
       }
-      elseif (self::FORM_SUBMITTED_STATUS == $this->status)
+      elseif ($this->isSubmitted())
       {
          $this->tpl->setVariable('errors', $this->errors);
          $this->tpl->setVariable('form_elements', $this->form_elements);
@@ -100,10 +108,22 @@ abstract class owForm
       {
          $this->tpl->setVariable('form_elements', $this->form_elements);
       }
+      
+      return $this->tpl->fetch( "design:owmoduleforms/form.tpl" );
    }
    
    public function getTemplate()
    {
       return $this->tpl;
+   }
+   
+   function initFormButtons()
+   {
+      $cancel_button = new owFormSubmit('cancel');
+      $submit_button = new owFormSubmit('submit');
+      $buttons_group = new owFormContainer('buttons');
+      $buttons_group->addFormElement($cancel_button);
+      $buttons_group->addFormElement($submit_button);
+      $this->addFormElement($buttons_group);
    }
 }
