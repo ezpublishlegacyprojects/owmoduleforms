@@ -1,0 +1,1 @@
+<input type="submit" name="{$element.name}" value="{$element.name}"/>

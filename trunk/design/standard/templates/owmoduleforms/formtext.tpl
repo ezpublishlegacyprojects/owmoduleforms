@@ -1,0 +1,1 @@
+<input type="text" name="{$element.name}" value="{$element.name}"/>
