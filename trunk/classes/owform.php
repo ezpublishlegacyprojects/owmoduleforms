@@ -5,110 +5,56 @@ require_once 'kernel/common/template.php';
 abstract class owForm extends owFormContainer
 {
    const FORM_GET_METHOD = 'get';
-   const FORM_LOADED_STATUS = 'loaded';
-   const FORM_SUBMITTED_STATUS = 'submitted';
-   const FORM_VALIDATED_STATUS = 'validated';
+   const FORM_POST_METHOD = 'post';
    
-   var $http;
    var $tpl;
    var $method;
-   var $errors;
-   var $status;
+   var $title;
+   var $html_attributes;
    
-   function __construct($name)
+   abstract function init();
+   
+   function __construct($name, $method=self::FORM_GET_METHOD, $title=false, $html_attributes=array())
    {
       parent::__construct($name);
-      $this->status = self::FORM_LOADED_STATUS;
-      $this->errors = array();
-      $this->method = self::FORM_GET_METHOD; 
-      $this->http = eZHTTPTool::instance();
+      $this->method = $method;
+      $this->title = $title;
+      $this->html_attributes=$html_attributes;
       $this->tpl = eZTemplate::factory();
       $this->init();
       $this->initFormButtons();
    }
-      
-   function getParameterValue($name)
-   {
-      if (self::FORM_GET_METHOD == $this->method)
-      {
-         return $this->http->getVariable($name, false);
-      }
-      else
-      {
-         return $this->http->variable($name, false);
-      }
-   }
    
-   function isFormValid()
+   function render()
    {
-      return empty($this->errors);
-   }
-   
-   function validate()
-   {
-      foreach ($this->form_elements as $element)
+      $submittedButton = $this->getSubmittedButton();
+      if ($submittedButton)
       {
-         $error = $element->validate();
-         if ($error)
+         $this->validate();
+         if ($this->isValid())
          {
-            $this->addError($error);
+            $submittedButton->process();
+            return $submittedButton->renderValidation();
          }
-      }
-      $this->customValidate();
-   }
-   
-   function addError($error)
-   {
-      $this->errors[] = $error;
-   }
-   
-   abstract function init();
-   
-   abstract function process();
-   
-   abstract function displayValidation();
-   
-   function submit()
-   {
-      $this->validate();
-      if ($this->isFormValid())
-      {
-         $this->status = self::FORM_VALIDATED_STATUS;
-         $this->process();
+         else
+         {
+            $this->tpl->setVariable('errors', $this->errors);
+            return $this->renderForm();
+         }         
       }
       else
       {
-         $this->status = self::FORM_SUBMITTED_STATUS;
+         return $this->renderForm();
       }
-      $this->display();
    }
    
-   function isSubmitted()
+   public function renderForm()
    {
-      return self::FORM_SUBMITTED_STATUS == $this->status;
-   }
-   
-   function isValidated()
-   {
-      return self::FORM_VALIDATED_STATUS == $this->status;
-   }
-   
-   function display()
-   {
-      if ($this->isValidated())
-      {
-         $this->tpl->setVariable('validation', $this->displayValidation());
-      }
-      elseif ($this->isSubmitted())
-      {
-         $this->tpl->setVariable('errors', $this->errors);
-         $this->tpl->setVariable('form_elements', $this->form_elements);
-      }
-      else
-      {
-         $this->tpl->setVariable('form_elements', $this->form_elements);
-      }
-      
+      $this->tpl->setVariable('form_elements', $this->form_elements);
+      $this->tpl->setVariable('form_method', $this->method);
+      $this->tpl->setVariable('form_name', $this->name);
+      $this->tpl->setVariable('form_title', $this->title);
+      $this->tpl->setVariable('form_attributes', $this->html_attributes);
       return $this->tpl->fetch( "design:owmoduleforms/form.tpl" );
    }
    
@@ -119,11 +65,33 @@ abstract class owForm extends owFormContainer
    
    function initFormButtons()
    {
-      $cancel_button = new owFormSubmit('cancel');
-      $submit_button = new owFormSubmit('submit');
       $buttons_group = new owFormContainer('buttons');
-      $buttons_group->addFormElement($cancel_button);
-      $buttons_group->addFormElement($submit_button);
+      $buttons_group->addFormElement(new owFormSubmit('submit'));
+      $buttons_group->addFormElement(new owFormSubmit('cancel'));
       $this->addFormElement($buttons_group);
    }
+   
+   function validate()
+   {
+      parent::validate();
+      $this->validateForm();
+   }
+   
+   function getFormMethod()
+   {
+      return $this->method;
+   }
+   
+   function getFormTemplate()
+   {
+      return $this->tpl;
+   }
+   
+   function validateForm()
+   {
+      /* do nothing
+       * must be extended for custom form validation
+       */
+   }
+  
 }
