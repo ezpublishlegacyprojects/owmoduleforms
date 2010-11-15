@@ -3,7 +3,7 @@
     	{if $element.label}
         	<label>
 	        	{$element.label}:
-	        	{if $element.attributes.required}
+	        	{if $element.html_attributes.required}
 	        		<strong class="required">*</strong>
 				{/if}
 			</label>

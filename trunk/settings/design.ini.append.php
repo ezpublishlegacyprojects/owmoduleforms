@@ -3,4 +3,7 @@
 [ExtensionSettings]
 DesignExtensions[]=owmoduleforms
 
+[StylesheetSettings]
+CSSFileList[]=forms.css
+
 */ ?>
