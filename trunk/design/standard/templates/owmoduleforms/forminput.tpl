@@ -1,9 +1,9 @@
 <div class="block float-break">
     <div class="element">
-    	{if $element.label}
+    	{if $element.options.label}
         	<label>
-	        	{$element.label}:
-	        	{if $element.html_attributes.required}
+	        	{$element.options.label}:
+	        	{if $element.options.required}
 	        		<strong class="required">*</strong>
 				{/if}
 			</label>

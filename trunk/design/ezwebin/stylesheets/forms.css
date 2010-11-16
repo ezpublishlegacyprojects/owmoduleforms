@@ -1,5 +1,6 @@
-form .block .element { width:95%; }
-form .required { color:red; }
-form .block .element label, form .block .element input { float: left; }
-form .block .element label { text-align:right; width:8em;}
-form .block .element input { margin-right:15px; }
+div.owmoduleforms form .block .element { width:95%; }
+div.owmoduleforms form .required { color:red; }
+div.owmoduleforms form .block .element label,
+div.owmoduleforms form .block .element input { float: left; }
+div.owmoduleforms form .block .element label { text-align:right; width:8em;}
+div.owmoduleforms form .block .element input { margin-right:15px; }

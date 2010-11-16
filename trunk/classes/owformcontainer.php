@@ -3,13 +3,13 @@
 class owFormContainer extends owFormElement
 {
    var $form_elements;
-    
-   public function __construct($name)
+
+   public function __construct($options=array())
    {
-      parent::__construct($name);
+      parent::__construct($options);
       $this->form_elements = array();
    }
-    
+
    function addFormElement($element)
    {
       if ($element instanceof owFormElement)
@@ -22,7 +22,7 @@ class owFormContainer extends owFormElement
          //TODO deal with exceptions
       }
    }
-   
+
    function getSubmittedButton()
    {
       foreach ($this->form_elements as $element)
@@ -34,7 +34,7 @@ class owFormContainer extends owFormElement
       }
       return false;
    }
-   
+
    function validate()
    {
       foreach ($this->form_elements as $element)

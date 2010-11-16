@@ -2,25 +2,64 @@
 
 class sendToFriendForm extends owForm
 {
-   function init()
-   {
-      $firstname = new owFormText('firstname', 'First Name', array('required' => true));
-      $this->addFormElement($firstname);
-      
-      $lastname = new owFormText('lastname', 'Last Name', array('required' => true));
-      $this->addFormElement($lastname);
-      
-      $email = new owFormText('email', 'E-mail', array('required' => true, 'default_value' => 'james@bond.com'));
-      $this->addFormElement($email);
-      
-      $username = new owFormText('username', 'User Name', array('required' => true));
-      $this->addFormElement($username);
-   }
-   
-} 
+    function init()
+    {
+        $firstname = new owFormText(array('name' => 'firstname', 'label' => 'First Name', 'required' => true));
+        $this->addFormElement($firstname);
+
+        $lastname = new owFormText(array('name' => 'lastname', 'label' => 'Last Name', 'required' => true));
+        $this->addFormElement($lastname);
+
+        $age = new owFormText(
+            array(
+                'name' => 'age',
+                'label' => 'Age (integer)',
+                'required' => true,
+                'validation' => array(
+                    'integer' => array(
+                        'min' => 7,
+                        'max' => 77
+                    )
+                )
+            )
+        );
+        $this->addFormElement($age);
+
+        $email = new owFormText(
+            array(
+                'name' => 'email',
+                'label' => 'E-mail',
+                'required' => true,
+                'default_value' => 'james@bond.com',
+                'validation' => array('email')
+            )
+        );
+        $this->addFormElement($email);
+
+        $username = new owFormText(array('name' => 'username', 'label' => 'User Name', 'required' => true, 'validation' => array('alpha')));
+        $this->addFormElement($username);
+
+        $fruit = new owFormText(
+            array(
+                'name' => 'fruit',
+                'label' => 'Your favorite fruit',
+                'validation' => array(
+                    'custom' => array(
+                        'name' => 'owInArrayValidator',
+                        'params' => array(
+                            'valid_items' => array('banana', 'apple', 'strawvberry', 'pear')
+                        )
+                    )
+                )
+            )
+        );
+        $this->addFormElement($fruit);
+    }
+
+}
 
 $title = ezi18n( 'extension/owmoduleforms', 'Send to friend test form' );
-$sendToFriendForm = new sendToFriendForm('sendtofriend', 'post', $title);
+$sendToFriendForm = new sendToFriendForm(array('name' => 'sendtofriend', 'method' => 'post', 'title' => $title));
 $Module->setTitle($title);
 
 $Result = array();

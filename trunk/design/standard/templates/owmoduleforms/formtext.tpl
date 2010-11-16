@@ -1,1 +1,1 @@
-<input type="text" name="{$element.name}" value="{$element.value}"/>
+<input type="text" name="{$element.options.name}" value="{$element.value}" />
