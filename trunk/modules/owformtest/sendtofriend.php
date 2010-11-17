@@ -54,6 +54,9 @@ class sendToFriendForm extends owForm
             )
         );
         $this->addFormElement($fruit);
+
+        $password = new owFormPassword(array('name' => 'password', 'label' => 'Password'));
+        $this->addFormElement($password);
     }
 
 }

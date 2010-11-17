@@ -1,0 +1,1 @@
+<input type="password" name="{$element.options.name}" value="{$element.value}" />

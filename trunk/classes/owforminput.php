@@ -8,6 +8,10 @@ abstract class owFormInput extends owFormElement
 
     public function __construct($options=array())
     {
+        if (!array_key_exists('name', $options))
+        {
+            eZDebug::writeError('Name is required for input!');
+        }
         parent::__construct($options);
         $this->http = eZHTTPTool::instance();
         $this->value = $this->getOption('default_value');

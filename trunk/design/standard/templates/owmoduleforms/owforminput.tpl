@@ -8,14 +8,7 @@
 				{/if}
 			</label>
         {/if}
-        {switch match=get_class($element)}
-			{case match='owformtext'}
-				{include uri='design:owmoduleforms/formtext.tpl' element=$element}
-			{/case}
-			{case match='owformsubmit'}
-				{include uri='design:owmoduleforms/formsubmit.tpl' element=$element}
-			{/case}
-		{/switch}
+        {include uri=concat('design:owmoduleforms/', get_class($element), '.tpl') element=$element}
 		{foreach $element.errors as $error}
 			<span class="warning">{$error}</span><br/>
 		{/foreach}

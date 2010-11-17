@@ -1,4 +1,12 @@
-{def $input_types=array('owformtext', 'owformsubmit', 'owformbutton', 'owformradio', 'owformselect')}
+{def
+    $input_types=array(
+        'owformtext', 'owformpassword', 'owformsubmit',
+        'owformbutton', 'owformradio', 'owformselect',
+        'owformcheckbox', 'owformtextarea', 'owformfile',
+        'owformhidden', 'owformbutton', 'owformimage',
+        'owformreset'
+    )
+}
 	{if is_set($form_options.title)}
 		<div class="maincontentheader">
 			<h1>{$form_options.title|i18n("design/owmoduleforms")}</h1>
