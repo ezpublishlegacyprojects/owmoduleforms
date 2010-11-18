@@ -56,7 +56,23 @@ class sendToFriendForm extends owForm
         $this->addFormElement($fruit);
 
         $password = new owFormPassword(array('name' => 'password', 'label' => 'Password'));
-        $this->addFormElement($password);
+        $password_again = new owFormPassword(array('name' => 'password_again', 'label' => 'Retype password'));
+
+        $passwords_options = array(
+            'legend' => 'Update your password',
+            'validation' => array(
+                'custom' => array(
+                    'name' => 'samePasswordsValidator',
+                )
+            )
+        );
+
+        $passwords = new owFormFieldset($passwords_options);
+        $passwords->addFormElement($password);
+        $passwords->addFormElement($password_again);
+        $this->addFormElement($passwords);
+
+
     }
 
 }

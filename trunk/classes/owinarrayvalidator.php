@@ -16,9 +16,9 @@ class owInArrayValidator extends owFormValidator
         }
     }
 
-    function validate($text)
+    function validate()
     {
-        return in_array($text, $this->getValidItems()) ? self::STATE_ACCEPTED : self::STATE_INVALID;
+        return in_array($this->form_element->getValue(), $this->getValidItems());
     }
 
     function getErrorMessage()

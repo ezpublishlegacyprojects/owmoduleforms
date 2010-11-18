@@ -81,33 +81,12 @@ abstract class owFormInput extends owFormElement
         }
     }
 
-    function validateCustom($validation_params)
+    function validateChildren()
     {
-        $validator_class_name = array_key_exists('name', $validation_params) ? $validation_params['name'] : false;
-        $validator_params = array_key_exists('params', $validation_params) ? $validation_params['params'] : array();
-        if ($validator_class_name)
-        {
-            try
-            {
-                $reflection = new ReflectionClass($validator_class_name);
-                $customValidator = $reflection->newInstance($validator_params);
-                if (!$customValidator->isValid($this->getValue()))
-                {
-                    $this->addError($this->getName(). $customValidator->getErrorMessage());
-                }
-            }
-            catch (Exception $e)
-            {
-                eZDebug::writeError('custom validator class ' . $validator_class_name. ' does not exist');
-            }
-        }
-        else
-        {
-            eZDebug::writeError('unable to find custom validator class');
-        }
+        // do nothing;
     }
 
-    function validate()
+    function selfValidate()
     {
         $this->value = $this->getValue();
         if ($this->isRequired() && !$this->value)
@@ -116,42 +95,7 @@ abstract class owFormInput extends owFormElement
         }
         elseif ($this->value)
         {
-            $validation_methods = $this->getOption('validation');
-            if ($validation_methods)
-            {
-                foreach ($validation_methods as $index => $validation_method)
-                {
-                    if (is_array($validation_method))
-                    {
-                        $method_name = $index;
-                        $validation_params = $validation_method;
-                    }
-                    else
-                    {
-                        $method_name = $validation_method;
-                        $validation_params = array();
-                    }
-
-                    switch($method_name)
-                    {
-                        case 'email' :
-                            $this->validateEmail();
-                            break;
-                        case 'integer' :
-                            $this->validateNumeric('integer', $validation_params);
-                            break;
-                        case 'float' :
-                            $this->validateNumeric('float', $validation_params);
-                            break;
-                        case 'alpha' :
-                            $this->validateAlphanumericString();
-                            break;
-                        case 'custom' :
-                            $this->validateCustom($validation_params);
-                            break;
-                    }
-                }
-            }
+            parent::selfValidate();
         }
     }
 

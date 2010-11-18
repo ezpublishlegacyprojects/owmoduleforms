@@ -63,12 +63,6 @@ abstract class owForm extends owFormContainer
         $this->addFormElement($buttons_group);
     }
 
-    function validate()
-    {
-        parent::validate();
-        $this->validateForm();
-    }
-
     function getFormMethod()
     {
         return $this->getOption('method');
@@ -77,13 +71,6 @@ abstract class owForm extends owFormContainer
     function getFormTemplate()
     {
         return $this->tpl;
-    }
-
-    function validateForm()
-    {
-        /* do nothing
-         * must be extended for custom form validation
-         */
     }
 
 }

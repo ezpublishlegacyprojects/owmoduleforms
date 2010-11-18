@@ -1,21 +1,20 @@
 <?php
 
-abstract class owFormValidator extends eZInputValidator
+abstract class owFormValidator
 {
 
+    var $form_element;
     var $params;
 
-    function __construct($params=array())
+    function __construct($form_element, $params=array())
     {
+        $this->form_element = $form_element;
         $this->params = $params;
     }
 
-    function isValid($text)
-    {
-        return eZInputValidator::STATE_ACCEPTED == $this->validate($text);
-    }
-
     abstract function getErrorMessage();
+
+    abstract function validate();
 
 }
 
