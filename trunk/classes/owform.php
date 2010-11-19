@@ -15,6 +15,7 @@ abstract class owForm extends owFormContainer
     {
         $this->setDefaultOption($options, 'method', self::FORM_GET_METHOD);
         parent::__construct($options);
+        $this->available_html_attributes = array_merge($this->available_html_attributes, array('onreset', 'onsubmit', 'action', 'name'));
         $this->tpl = eZTemplate::factory();
         $this->init();
         $this->initFormButtons();
@@ -45,8 +46,7 @@ abstract class owForm extends owFormContainer
 
     public function renderForm()
     {
-        $this->tpl->setVariable('form_elements', $this->form_elements);
-        $this->tpl->setVariable('form_options', $this->options);
+        $this->tpl->setVariable('form', $this);
         return $this->tpl->fetch( "design:owmoduleforms/form.tpl" );
     }
 

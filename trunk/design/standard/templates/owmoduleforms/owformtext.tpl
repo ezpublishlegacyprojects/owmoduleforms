@@ -1,1 +1,1 @@
-<input type="text" name="{$element.options.name}" value="{$element.value}" />
+<input type="text" value="{$element.value}" {foreach $element.available_html_attributes as $attribute}{if is_set($element.options.$attribute)} {$attribute}="{$element.options.$attribute}"{/if}{/foreach} />

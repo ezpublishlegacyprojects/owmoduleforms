@@ -1,0 +1,1 @@
+<input type="image" value="{$element.value}" src={$element.options.src|ezdesign()} {foreach $element.available_html_attributes as $attribute}{if is_set($element.options.$attribute)} {$attribute}="{$element.options.$attribute}"{/if}{/foreach} />

@@ -1,7 +1,7 @@
 <div class="block float-break">
     <div class="element">
     	{if $element.options.label}
-        	<label>
+        	<label {if is_set($element.options.id)}for="{$element.options.id}"{/if}>
 	        	{$element.options.label}:
 	        	{if $element.options.required}
 	        		<strong class="required">*</strong>

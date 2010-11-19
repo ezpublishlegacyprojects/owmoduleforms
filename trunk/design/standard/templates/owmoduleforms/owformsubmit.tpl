@@ -1,1 +1,1 @@
-<input class="button" type="submit" name="{$element.options.name}" value="{$element.options.name}" />
+<input class="button" type="submit" name="{$element.options.name}" value="{$element.options.name}" {foreach $element.available_html_attributes as $attribute}{if is_set($element.options.$attribute)} {$attribute}="{$element.options.$attribute}"{/if}{/foreach} />

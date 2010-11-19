@@ -5,9 +5,11 @@ abstract class owFormElement
     var $errors;
     var $parent_form_element;
     var $options;
+    var $available_html_attributes;
 
     public function __construct($options)
     {
+        $this->available_html_attributes = array('accesskey', 'class', 'dir', 'id', 'lang', 'style', 'tabindex', 'title', 'xml:lang');
         $this->options = $options;
         $this->errors = array();
         $this->setParentFormElement(false);

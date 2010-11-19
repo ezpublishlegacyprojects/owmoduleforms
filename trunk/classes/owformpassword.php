@@ -1,7 +1,8 @@
 <?php
 
-class owFormPassword extends owFormInput
+class owFormPassword extends owFormText
 {
+
 }
 
 ?>

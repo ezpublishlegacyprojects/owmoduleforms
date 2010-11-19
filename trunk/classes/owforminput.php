@@ -12,7 +12,16 @@ abstract class owFormInput extends owFormElement
         {
             eZDebug::writeError('Name is required for input!');
         }
+        elseif (!array_key_exists('id', $options))
+        {
+            $this->setDefaultOption($options, 'id', $options['name']);
+        }
         parent::__construct($options);
+        $html_common_input_attributes = array(
+            'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onmousedown', 'onmousemove', 'onmouseout',
+            'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup', 'onselect','disabled', 'size', 'name'
+        );
+        $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
         $this->http = eZHTTPTool::instance();
         $this->value = $this->getOption('default_value');
     }

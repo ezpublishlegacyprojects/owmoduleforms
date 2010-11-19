@@ -1,20 +1,10 @@
-{def
-    $input_types=array(
-        'owformtext', 'owformpassword', 'owformsubmit',
-        'owformbutton', 'owformradio', 'owformselect',
-        'owformcheckbox', 'owformtextarea', 'owformfile',
-        'owformhidden', 'owformbutton', 'owformimage',
-        'owformreset'
-    )
-}
-	{if is_set($form_options.title)}
-		<div class="maincontentheader">
-			<h1>{$form_options.title|i18n("design/owmoduleforms")}</h1>
-		</div>
-	{/if}
-	<div class="owmoduleforms">
-		<form method="{$form_options.method}" name="{$form_options.name}">
-			{include uri='design:owmoduleforms/formelements.tpl' form_elements=$form_elements}
-		</form>
+{if is_set($form.options.title)}
+	<div class="maincontentheader">
+		<h1>{$form.options.title|i18n("design/owmoduleforms")}</h1>
 	</div>
-{undef $input_types}
+{/if}
+<div class="owmoduleforms">
+	<form {foreach $form.available_html_attributes as $attribute}{if is_set($form.options.$attribute)} {$attribute}="{$form.options.$attribute}"{/if}{/foreach}>
+		{include uri='design:owmoduleforms/formelements.tpl' form_elements=$form.form_elements}
+	</form>
+</div>
