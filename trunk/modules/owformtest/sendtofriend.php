@@ -11,7 +11,7 @@ class sendToFriendForm extends owForm
         $this->addFormElement($lastname);
 
         $age = new owFormText(
-            array(
+        array(
                 'name' => 'age',
                 'label' => 'Age (integer)',
                 'required' => true,
@@ -19,20 +19,20 @@ class sendToFriendForm extends owForm
                     'integer' => array(
                         'min' => 7,
                         'max' => 77
-                    )
-                )
-            )
+        )
+        )
+        )
         );
         $this->addFormElement($age);
 
         $email = new owFormText(
-            array(
+        array(
                 'name' => 'email',
                 'label' => 'E-mail',
                 'required' => true,
                 'default_value' => 'james@bond.com',
                 'validation' => array('email')
-            )
+        )
         );
         $this->addFormElement($email);
 
@@ -40,7 +40,7 @@ class sendToFriendForm extends owForm
         $this->addFormElement($username);
 
         $fruit = new owFormText(
-            array(
+        array(
                 'name' => 'fruit',
                 'label' => 'Your favorite fruit',
                 'validation' => array(
@@ -48,10 +48,10 @@ class sendToFriendForm extends owForm
                         'name' => 'owInArrayValidator',
                         'params' => array(
                             'valid_items' => array('banana', 'apple', 'strawvberry', 'pear')
-                        )
-                    )
-                )
-            )
+        )
+        )
+        )
+        )
         );
         $this->addFormElement($fruit);
 
@@ -63,8 +63,8 @@ class sendToFriendForm extends owForm
             'validation' => array(
                 'custom' => array(
                     'name' => 'samePasswordsValidator',
-                )
-            ),
+        )
+        ),
             'class' => 'password_container',
         );
 
@@ -81,6 +81,15 @@ class sendToFriendForm extends owForm
 
         $transport = new owFormCheckbox(array('name' => 'transport', 'label' => 'Transports', 'values'=> array('car' => 'Car', 'boat' => 'Boat', 'cycle' => 'Cycle', 'airplane' => 'Air Plane', 'foot' => 'Foot'), 'required' => true));
         $this->addFormElement($transport);
+
+        $job = new owFormSelect(array('name'=>'job', 'label' => 'Job', 'values' => array('engineer', 'developer', 'manager', 'boss', 'manufacturer', 'craftsman')));
+        $this->addFormElement($job);
+
+        $car = new owFormSelect(array('name' => 'car', 'label' => 'Your car', 'values'=>array('Swedish Cars' => array('volvo' => 'Volvo', 'saab' => 'Saab'), 'German Cars' => array('audi' => 'Audi', 'vw' => 'Volkswagen', 'bmw' => 'BMW'))));
+        $this->addFormElement($car);
+
+        $hobbies = new owFormSelect(array('name' => 'hobbies', 'label' => 'Hobbies', 'multiple' => 'multiple', 'values' => array('surfing', 'reading', 'coding', 'cinema', 'theater', 'family', 'travels')));
+        $this->addFormElement($hobbies);
     }
 
 }
