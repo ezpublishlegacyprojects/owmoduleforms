@@ -5,5 +5,6 @@ DesignExtensions[]=owmoduleforms
 
 [StylesheetSettings]
 CSSFileList[]=forms.css
+CSSFileList[]=ezwebinforms.css
 
 */ ?>

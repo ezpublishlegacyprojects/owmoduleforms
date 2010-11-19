@@ -76,6 +76,9 @@ class sendToFriendForm extends owForm
         $image = new owFormImage(array('name' => 'imagesubmit', 'src' => 'images/submit.png'));
         $this->addFormElement($image);
 
+        $gender = new owFormRadio(array('name' => 'gender', 'label' => 'Gender', 'values'=> array('male' => 'Male', 'female' => 'Female', 'none' => 'Undetermined'), 'required' => true));
+        $this->addFormElement($gender);
+
     }
 
 }

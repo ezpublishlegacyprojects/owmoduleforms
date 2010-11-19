@@ -15,7 +15,7 @@ abstract class owForm extends owFormContainer
     {
         $this->setDefaultOption($options, 'method', self::FORM_GET_METHOD);
         parent::__construct($options);
-        $this->available_html_attributes = array_merge($this->available_html_attributes, array('onreset', 'onsubmit', 'action', 'name'));
+        $this->available_html_attributes = array_merge($this->available_html_attributes, array('onreset', 'onsubmit', 'action', 'name', 'method'));
         $this->tpl = eZTemplate::factory();
         $this->init();
         $this->initFormButtons();

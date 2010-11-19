@@ -100,7 +100,7 @@ abstract class owFormInput extends owFormElement
         $this->value = $this->getValue();
         if ($this->isRequired() && !$this->value)
         {
-            $this->addError($this->getName() . ' is not valid');
+            $this->addError($this->getName() . ' is required');
         }
         elseif ($this->value)
         {
