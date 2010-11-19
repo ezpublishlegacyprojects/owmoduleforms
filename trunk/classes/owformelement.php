@@ -163,6 +163,12 @@ abstract class owFormElement
         }
     }
 
+    function removeAvailableAttribute($attribute)
+    {
+        $position = array_search('id', $this->available_html_attributes);
+        unset($this->available_html_attributes[$position]);
+    }
+
 }
 
 ?>

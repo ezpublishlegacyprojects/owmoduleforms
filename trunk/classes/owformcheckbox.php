@@ -1,6 +1,6 @@
 <?php
 
-class owFormRadio extends owFormInput
+class owFormCheckbox extends owFormInput
 {
 
     function __construct($options=array())

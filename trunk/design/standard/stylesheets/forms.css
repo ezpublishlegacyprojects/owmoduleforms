@@ -1,4 +1,4 @@
-div.owmoduleforms form .block .element div.ow_radio { float:left; }
-div.owmoduleforms form .block .element div.ow_radio div.ow_radio_item { height:1.5em;}
-div.owmoduleforms form .block .element div.ow_radio div.ow_radio_item input { margin-top:0px; }
-div.owmoduleforms form .block .element div.ow_radio div.ow_radio_item label { text-align:left; width:auto; padding:0 0 0 0; font-size:inherit; }
+div.ow_input_group { float:left; }
+div.ow_input_item { height:1.5em;}
+div.ow_input_item input { margin-top:0px; }
+div.owmoduleforms form .block .element div.ow_input_item label { text-align:left; width:auto; padding:0 0 0 0; font-size:inherit; }

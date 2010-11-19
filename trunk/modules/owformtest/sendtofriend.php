@@ -79,6 +79,8 @@ class sendToFriendForm extends owForm
         $gender = new owFormRadio(array('name' => 'gender', 'label' => 'Gender', 'values'=> array('male' => 'Male', 'female' => 'Female', 'none' => 'Undetermined'), 'required' => true));
         $this->addFormElement($gender);
 
+        $transport = new owFormCheckbox(array('name' => 'transport', 'label' => 'Transports', 'values'=> array('car' => 'Car', 'boat' => 'Boat', 'cycle' => 'Cycle', 'airplane' => 'Air Plane', 'foot' => 'Foot'), 'required' => true));
+        $this->addFormElement($transport);
     }
 
 }

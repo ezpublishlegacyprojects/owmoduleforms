@@ -8,11 +8,8 @@ abstract class owFormInput extends owFormElement
 
     public function __construct($options=array())
     {
-        if (!array_key_exists('name', $options))
-        {
-            eZDebug::writeError('Name is required for input!');
-        }
-        elseif (!array_key_exists('id', $options))
+        $this->checkForRequiredOption('name', $options);
+        if (!array_key_exists('id', $options))
         {
             $this->setDefaultOption($options, 'id', $options['name']);
         }
@@ -105,6 +102,14 @@ abstract class owFormInput extends owFormElement
         elseif ($this->value)
         {
             parent::selfValidate();
+        }
+    }
+
+    function checkForRequiredOption($required_option, $options)
+    {
+        if (!array_key_exists($required_option, $options))
+        {
+            eZDebug::writeError('"' . $required_option . '" is a required option for input!');
         }
     }
 
