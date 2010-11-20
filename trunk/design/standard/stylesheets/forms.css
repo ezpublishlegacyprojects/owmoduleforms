@@ -2,3 +2,10 @@ div.ow_input_group { float:left; }
 div.ow_input_item { height:1.5em;}
 div.ow_input_item input { margin-top:0px; }
 div.owmoduleforms form .block .element div.ow_input_item label { text-align:left; width:auto; padding:0 0 0 0; font-size:inherit; }
+
+div.date div.block, div.time div.block {float:left;clear:none;}
+img.datepicker-icon {float:left; margin:0 6px 0 0; padding:0;}
+div.owmoduleforms form .date .block .element label,
+div.owmoduleforms form .time .block .element label {width:auto;}
+div.owmoduleforms form .date .block .element input,
+div.owmoduleforms form .time .block .element input {margin:0 6px 0 0;}

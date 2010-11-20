@@ -10,9 +10,9 @@ class owFormContainer extends owFormElement
         $html_container_attributes = array(
             'onclick', 'ondblclick', 'onmousedown', 'onmousemove', 'onmouseout',
             'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup'
-        );
-        $this->available_html_attributes = array_merge($this->available_html_attributes, $html_container_attributes);
-        $this->form_elements = array();
+            );
+            $this->available_html_attributes = array_merge($this->available_html_attributes, $html_container_attributes);
+            $this->form_elements = array();
     }
 
     function addFormElement($element)
@@ -42,13 +42,23 @@ class owFormContainer extends owFormElement
 
     function validateChildren()
     {
+        $is_empty = $this->isRequired();
+
         foreach ($this->form_elements as $element)
         {
             $element->validate();
+            if ( $is_empty && $element->getValue())
+            {
+                $is_empty = false;
+            }
             foreach ($element->errors as $error)
             {
                 $this->addError($error);
             }
+        }
+        if ($is_empty)
+        {
+            $this->addRequiredError();
         }
     }
 

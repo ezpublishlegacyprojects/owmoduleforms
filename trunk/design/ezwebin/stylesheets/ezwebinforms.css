@@ -1,6 +1,6 @@
-div.owmoduleforms form .block .element { width:95%; }
-div.owmoduleforms form .required { color:red; }
+div.owmoduleforms form .block .element { padding:0; line-height:1.4em;}
+div.owmoduleforms form .required, div.owmoduleforms form span.warning { color:red; }
 div.owmoduleforms form .block .element label,
-div.owmoduleforms form .block .element input { float: left; }
-div.owmoduleforms form .block .element label { text-align:right; width:8em;}
-div.owmoduleforms form .block .element input { margin-right:15px; }
+div.owmoduleforms form .block .element input { float: left;  }
+div.owmoduleforms form .block .element label { text-align:right; width:8em; }
+div.owmoduleforms form .block .element input { }

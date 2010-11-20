@@ -72,6 +72,11 @@ abstract class owFormElement
         $this->errors[] = $error;
     }
 
+    function addRequiredError()
+    {
+        $this->addError($this->getName() . ' is required');
+    }
+    
     function getName()
     {
         return $this->getOption('name');
@@ -167,6 +172,14 @@ abstract class owFormElement
     {
         $position = array_search('id', $this->available_html_attributes);
         unset($this->available_html_attributes[$position]);
+    }
+
+    function checkForRequiredOption($required_option, $options)
+    {
+        if (!array_key_exists($required_option, $options))
+        {
+            eZDebug::writeError('"' . $required_option . '" is a required option for input!');
+        }
     }
 
 }

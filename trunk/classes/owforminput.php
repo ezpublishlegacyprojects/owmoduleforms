@@ -18,6 +18,7 @@ abstract class owFormInput extends owFormElement
             'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onmousedown', 'onmousemove', 'onmouseout',
             'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup', 'onselect','disabled', 'size', 'name'
         );
+        
         $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
         $this->http = eZHTTPTool::instance();
         $this->value = $this->getOption('default_value');
@@ -97,19 +98,11 @@ abstract class owFormInput extends owFormElement
         $this->value = $this->getValue();
         if ($this->isRequired() && !$this->value)
         {
-            $this->addError($this->getName() . ' is required');
+            $this->addRequiredError();
         }
         elseif ($this->value)
         {
             parent::selfValidate();
-        }
-    }
-
-    function checkForRequiredOption($required_option, $options)
-    {
-        if (!array_key_exists($required_option, $options))
-        {
-            eZDebug::writeError('"' . $required_option . '" is a required option for input!');
         }
     }
 
