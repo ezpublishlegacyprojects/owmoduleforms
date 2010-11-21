@@ -47,8 +47,6 @@
 			{include uri='design:owmoduleforms/owforminput.tpl' element=$datetime.form_elements.3}
 			{include uri='design:owmoduleforms/owforminput.tpl' element=$datetime.form_elements.4}
 		</div>
-		{foreach $datetime.errors as $error}
-	        <span class="warning">{$error}</span><br/>
-	    {/foreach}
+		{include uri='design:owmoduleforms/form_errors.tpl' errors=$datetime.errors}
 	</fieldset>
 {undef $datetime}

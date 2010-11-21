@@ -10,9 +10,7 @@
 				</label>
 	    	{/if}
 		    {include uri=concat('design:owmoduleforms/', $type, '.tpl') element=$element}
-			{foreach $element.errors as $error}
-				<span class="warning">{$error}</span><br/>
-			{/foreach}
+		    {include uri='design:owmoduleforms/form_errors.tpl' errors=$element.errors}
 	    </div>
 	</div>
 {undef $type}

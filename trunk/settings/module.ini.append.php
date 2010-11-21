@@ -2,6 +2,6 @@
 
 [ModuleSettings]
 ExtensionRepositories[]=owmoduleforms
-ModuleList[]=owformtest
+ModuleList[]=owmoduleformssamples
 
 */ ?>

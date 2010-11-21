@@ -65,7 +65,12 @@ class owFormFile extends owFormInput
             eZDebug::writeError('Unable to move uploaded file !');
         }
     }
-    
+
+    function isMultipartForm()
+    {
+        return true;
+    }
+
 }
 
 ?>

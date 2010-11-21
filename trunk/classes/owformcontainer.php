@@ -18,11 +18,6 @@ class owFormContainer extends owFormElement
         {
             $element->setParentFormElement($this);
             $this->form_elements[] = $element;
-            if ($element instanceof owFormFile)
-            {
-                $form = $this->getMainForm($this);
-                $form->options['enctype'] = 'multipart/form-data';
-            }
         }
         else
         {
@@ -50,7 +45,11 @@ class owFormContainer extends owFormElement
             $element->validate();
             foreach ($element->errors as $error)
             {
-                $this->addError($error);
+                if (!array_key_exists('children_errors', $this->errors))
+                {
+                    $this->errors['children_errors'] = array();
+                }
+                $this->errors['children_errors'][] = $error;
             }
         }
     }
@@ -88,6 +87,17 @@ class owFormContainer extends owFormElement
         }
     }
 
+    function isMultipartForm()
+    {
+        foreach ($this->children() as $element)
+        {
+            if ($element->isMultipartForm())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 ?>

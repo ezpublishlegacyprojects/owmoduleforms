@@ -20,6 +20,10 @@ abstract class owForm extends owFormContainer
         $this->tpl = eZTemplate::factory();
         $this->init();
         $this->initFormButtons();
+        if ($this->isMultipartForm())
+        {
+            $this->options['enctype'] = 'multipart/form-data';
+        }
     }
 
     function render()

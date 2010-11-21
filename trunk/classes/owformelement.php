@@ -179,14 +179,14 @@ abstract class owFormElement
         }
     }
 
-    function getMainForm($form_element)
-    {
-       return ($form_element instanceof owForm) ? $form_element : $this->getMainForm($form_element->parent_form_element);
-    }
-    
     function submit()
     {
         //do nothing
+    }
+    
+    function isMultipartForm()
+    {
+        return false;
     }
 }
 
