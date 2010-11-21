@@ -4,7 +4,7 @@ class sendToFriendForm extends owForm
 {
     function init()
     {
-        $firstname = new owFormText(array('name' => 'firstname', 'label' => 'First Name', 'required' => true, 'readonly' => 'readonly'));
+        /*$firstname = new owFormText(array('name' => 'firstname', 'label' => 'First Name', 'required' => true, 'readonly' => 'readonly'));
         $this->addFormElement($firstname);
 
         $lastname = new owFormText(array('name' => 'lastname', 'label' => 'Last Name', 'required' => true, 'disabled' => 'disabled'));
@@ -36,7 +36,7 @@ class sendToFriendForm extends owForm
         );
         $this->addFormElement($email);
 
-        /*$username = new owFormText(array('name' => 'username', 'label' => 'User Name', 'required' => true, 'maxlength' => 8, 'validation' => array('alpha')));
+        $username = new owFormText(array('name' => 'username', 'label' => 'User Name', 'required' => true, 'maxlength' => 8, 'validation' => array('alpha')));
         $this->addFormElement($username);
 
         $fruit = new owFormText(
@@ -53,7 +53,7 @@ class sendToFriendForm extends owForm
         )
         )
         );
-        $this->addFormElement($fruit);*/
+        $this->addFormElement($fruit);
 
         $password = new owFormPassword(array('name' => 'password', 'label' => 'Password', 'maxlength' => 6));
         $password_again = new owFormPassword(array('name' => 'password_again', 'label' => 'Retype password', 'maxlength' => 6));
@@ -73,7 +73,7 @@ class sendToFriendForm extends owForm
         $passwords->addFormElement($password_again);
         $this->addFormElement($passwords);
 
-        /*$image = new owFormImage(array('name' => 'imagesubmit', 'src' => 'images/submit.png'));
+        $image = new owFormImage(array('name' => 'imagesubmit', 'src' => 'images/submit.png'));
         $this->addFormElement($image);
 
         $gender = new owFormRadio(array('name' => 'gender', 'label' => 'Gender', 'values'=> array('male' => 'Male', 'female' => 'Female', 'none' => 'Undetermined'), 'required' => true));
@@ -96,6 +96,12 @@ class sendToFriendForm extends owForm
         
         $birthdate = new owFormDatetime(array('name' => 'birthdate', 'legend' => 'Birth date', 'required' => true));
         $this->addFormElement($birthdate);
+        
+        $cv = new owFormFile(array('name'=>'cv', 'label' => 'Your CV', 'required' => true, 'accept' => 'image/gif, image/jpeg, image/png', 'maxfilesize' => '10000', 'upload_dir_path' => '/tmp/uploads/'));
+        $this->addFormElement($cv);
+        
+        $send = new owFormInputButton(array('name' => 'send', 'label' => 'Send'));
+        $this->addFormElement($send);
     }
 
 }

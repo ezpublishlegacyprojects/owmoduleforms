@@ -15,7 +15,8 @@ abstract class owForm extends owFormContainer
     {
         $this->setDefaultOption($options, 'method', self::FORM_GET_METHOD);
         parent::__construct($options);
-        $this->available_html_attributes = array_merge($this->available_html_attributes, array('onreset', 'onsubmit', 'action', 'name', 'method'));
+        $form_html_attributes = array('onreset', 'onsubmit', 'action', 'name', 'method', 'accept', 'accept-charset', 'enctype');
+        $this->available_html_attributes = array_merge($this->available_html_attributes, $form_html_attributes);
         $this->tpl = eZTemplate::factory();
         $this->init();
         $this->initFormButtons();
@@ -29,8 +30,8 @@ abstract class owForm extends owFormContainer
             $this->validate();
             if ($this->isValid())
             {
-                $submittedButton->process();
-                return $submittedButton->renderValidation();
+                $this->submit();
+                return $submittedButton->renderSubmit();
             }
             else
             {
@@ -59,7 +60,7 @@ abstract class owForm extends owFormContainer
     {
         $buttons_group = new owFormContainer();
         $buttons_group->addFormElement(new owFormSubmit());
-        $buttons_group->addFormElement(new owFormSubmit(array('name' => 'cancel')));
+        $buttons_group->addFormElement(new owFormSubmit(array('name' => 'cancel', 'label' => 'Cancel')));
         $this->addFormElement($buttons_group);
     }
 

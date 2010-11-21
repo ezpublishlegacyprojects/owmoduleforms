@@ -7,12 +7,9 @@ class owFormContainer extends owFormElement
     public function __construct($options=array())
     {
         parent::__construct($options);
-        $html_container_attributes = array(
-            'onclick', 'ondblclick', 'onmousedown', 'onmousemove', 'onmouseout',
-            'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup'
-            );
-            $this->available_html_attributes = array_merge($this->available_html_attributes, $html_container_attributes);
-            $this->form_elements = array();
+        $html_container_attributes = array('onclick', 'ondblclick', 'onmousedown', 'onmousemove', 'onmouseout','onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup');
+        $this->available_html_attributes = array_merge($this->available_html_attributes, $html_container_attributes);
+        $this->form_elements = array();
     }
 
     function addFormElement($element)
@@ -21,6 +18,11 @@ class owFormContainer extends owFormElement
         {
             $element->setParentFormElement($this);
             $this->form_elements[] = $element;
+            if ($element instanceof owFormFile)
+            {
+                $form = $this->getMainForm($this);
+                $form->options['enctype'] = 'multipart/form-data';
+            }
         }
         else
         {
@@ -67,6 +69,14 @@ class owFormContainer extends owFormElement
         return $this->form_elements;
     }
 
+    function submit()
+    {
+        foreach($this->form_elements as $element)
+        {
+            $element->submit();
+        }
+    }
+    
 }
 
 ?>
