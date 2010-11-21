@@ -95,12 +95,6 @@ abstract class owFormElement
         }
     }
 
-    function validate()
-    {
-        $this->validateChildren();
-        $this->selfValidate();
-    }
-
     function validateCustom($validation_params)
     {
         $validator_class_name = array_key_exists('name', $validation_params) ? $validation_params['name'] : false;
@@ -128,8 +122,11 @@ abstract class owFormElement
         }
     }
 
-    function selfValidate()
+    abstract function checkRequired();
+    
+    function validate()
     {
+        $this->checkRequired();        
         $validation_methods = $this->getOption('validation');
         if ($validation_methods)
         {

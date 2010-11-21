@@ -32,7 +32,7 @@ class owFormContainer extends owFormElement
 
     function getSubmittedButton()
     {
-        foreach ($this->form_elements as $element)
+        foreach ($this->children() as $element)
         {
             if ( $button = $element->getSubmittedButton())
             {
@@ -42,25 +42,16 @@ class owFormContainer extends owFormElement
         return false;
     }
 
-    function validateChildren()
+    function validate()
     {
-        $is_empty = $this->isRequired();
-
-        foreach ($this->form_elements as $element)
+        parent::validate();
+        foreach ($this->children() as $element)
         {
             $element->validate();
-            if ( $is_empty && $element->getValue())
-            {
-                $is_empty = false;
-            }
             foreach ($element->errors as $error)
             {
                 $this->addError($error);
             }
-        }
-        if ($is_empty)
-        {
-            $this->addRequiredError();
         }
     }
 
@@ -71,12 +62,32 @@ class owFormContainer extends owFormElement
 
     function submit()
     {
-        foreach($this->form_elements as $element)
+        foreach($this->children() as $element)
         {
             $element->submit();
         }
     }
-    
+
+    function checkRequired()
+    {
+        $is_empty = false;
+        if ($this->isRequired())
+        {
+            $is_empty = true;
+            foreach ($this->children() as $element)
+            {
+                if ($element->getValue())
+                {
+                    $is_empty=false;
+                }
+            }
+        }
+        if ($is_empty)
+        {
+            $this->addRequiredError();
+        }
+    }
+
 }
 
 ?>

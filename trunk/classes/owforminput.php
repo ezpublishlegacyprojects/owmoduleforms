@@ -88,21 +88,12 @@ abstract class owFormInput extends owFormElement
         }
     }
 
-    function validateChildren()
-    {
-        // do nothing;
-    }
-
-    function selfValidate()
+    function checkRequired()
     {
         $this->value = $this->getValue();
         if ($this->isRequired() && !$this->value)
         {
             $this->addRequiredError();
-        }
-        elseif ($this->value)
-        {
-            parent::selfValidate();
         }
     }
 
