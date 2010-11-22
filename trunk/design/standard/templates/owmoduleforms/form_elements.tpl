@@ -7,6 +7,12 @@
 		{include uri='design:owmoduleforms/owformdatetime.tpl' element=$element}
 	{elseif eq('owformmarkup', get_class($element))}
 		{include uri='design:owmoduleforms/owformmarkup.tpl' element=$element}
+    {elseif eq('owformsubmit', get_class($element))}
+        {include uri='design:owmoduleforms/owformsubmit.tpl' element=$element}
+    {elseif eq('owforminputbutton', get_class($element))}
+        {include uri='design:owmoduleforms/owforminputbutton.tpl' element=$element}
+    {elseif eq('owformimage', get_class($element))}
+        {include uri='design:owmoduleforms/owformimage.tpl' element=$element}
     {else}
 		{include uri='design:owmoduleforms/owforminput.tpl' element=$element}
 	{/if}

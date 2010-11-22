@@ -18,7 +18,7 @@ abstract class owFormInput extends owFormElement
             'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onmousedown', 'onmousemove', 'onmouseout',
             'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup', 'onselect','disabled', 'size', 'name'
         );
-        
+
         $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
         $this->http = eZHTTPTool::instance();
         $this->value = $this->getOption('default_value');
@@ -31,14 +31,19 @@ abstract class owFormInput extends owFormElement
 
     function getValue()
     {
+        return $this->value;
+    }
+
+    function setValueFromRequest()
+    {
         $method = $this->getFormMethod();
         if (owForm::FORM_GET_METHOD == $method)
         {
-            return $this->http->getVariable($this->getName(), false);
+            $this->value = $this->http->getVariable($this->getName(), false);
         }
         else
         {
-            return $this->http->variable($this->getName(), false);
+            $this->value = $this->http->variable($this->getName(), false);
         }
     }
 
@@ -95,6 +100,11 @@ abstract class owFormInput extends owFormElement
         {
             $this->addRequiredError();
         }
+    }
+
+    function getInputElements()
+    {
+        return $this;
     }
 
 }

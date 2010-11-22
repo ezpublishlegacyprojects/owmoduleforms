@@ -76,10 +76,15 @@ abstract class owFormElement
     {
         $this->addError($this->getName() . ' is required');
     }
-    
+
     function getName()
     {
         return $this->getOption('name');
+    }
+
+    function getLabel()
+    {
+        return $this->getOption('label');
     }
 
     function isRequired()
@@ -123,10 +128,10 @@ abstract class owFormElement
     }
 
     abstract function checkRequired();
-    
+
     function validate()
     {
-        $this->checkRequired();        
+        $this->checkRequired();
         $validation_methods = $this->getOption('validation');
         if ($validation_methods)
         {
@@ -183,11 +188,33 @@ abstract class owFormElement
     {
         //do nothing
     }
-    
+
     function isMultipartForm()
     {
         return false;
     }
+
+    function getMainForm()
+    {
+        if (is_object($this->parent_form_element))
+        {
+            return $this->parent_form_element->getMainForm();
+        }
+        elseif ($this instanceof owForm)
+        {
+            return $this;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getSubmittedData()
+    {
+        return array();
+    }
+
 }
 
 ?>

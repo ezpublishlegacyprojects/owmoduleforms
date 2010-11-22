@@ -98,6 +98,23 @@ class owFormContainer extends owFormElement
         }
         return false;
     }
+
+    function getSubmittedData()
+    {
+        $valued_elements = array();
+        foreach($this->children() as $child)
+        {
+            if ($child instanceof owFormInput)
+            {
+                $valued_elements[] = $child;
+            }
+            else
+            {
+                $valued_elements = array_merge($valued_elements, $child->getSubmittedData());
+            }
+        }
+        return $valued_elements;
+    }
 }
 
 ?>

@@ -5,8 +5,16 @@ class samePasswordsValidator extends owFormValidator
 
     function validate()
     {
-        $passwords = $this->form_element->children();
-        return $passwords[0]->getValue() == $passwords[1]->getValue();
+        $children = $this->form_element->children();
+        $input_values_to_compare = array();
+        foreach ($children as $input)
+        {
+            if (in_array($input->getName(), $this->getParams()))
+            {
+                $input_values_to_compare[$input->getValue()] = true;
+            }
+        }
+        return count($input_values_to_compare) == 1;
     }
 
     function getErrorMessage()

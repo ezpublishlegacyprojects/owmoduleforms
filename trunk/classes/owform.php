@@ -19,7 +19,7 @@ abstract class owForm extends owFormContainer
         $this->available_html_attributes = array_merge($this->available_html_attributes, $form_html_attributes);
         $this->tpl = eZTemplate::factory();
         $this->init();
-        $this->initFormButtons();
+        $this->initButtons();
         if ($this->isMultipartForm())
         {
             $this->options['enctype'] = 'multipart/form-data';
@@ -31,6 +31,10 @@ abstract class owForm extends owFormContainer
         $submittedButton = $this->getSubmittedButton();
         if ($submittedButton)
         {
+            foreach ($this->getSubmittedData() as $input)
+            {
+                $input->setValueFromRequest();
+            }
             $this->validate();
             if ($this->isValid())
             {
@@ -60,9 +64,9 @@ abstract class owForm extends owFormContainer
         return $this->tpl;
     }
 
-    function initFormButtons()
+    function initButtons()
     {
-        $buttons_group = new owFormContainer();
+        $buttons_group = new owFormContainer(array('class' => 'buttonblock block float-break'));
         $buttons_group->addFormElement(new owFormSubmit());
         $buttons_group->addFormElement(new owFormSubmit(array('name' => 'cancel', 'label' => 'Cancel')));
         $this->addFormElement($buttons_group);

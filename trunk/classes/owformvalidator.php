@@ -12,6 +12,11 @@ abstract class owFormValidator
         $this->params = $params;
     }
 
+    function getParams()
+    {
+        return $this->params;
+    }
+
     abstract function getErrorMessage();
 
     abstract function validate();

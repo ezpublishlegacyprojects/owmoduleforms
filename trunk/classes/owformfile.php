@@ -10,15 +10,13 @@ class owFormFile extends owFormInput
         $this->available_html_attributes = array_merge($this->available_html_attributes, array('accept', 'readonly'));
     }
 
-    function getValue()
+    function setValueFromRequest()
     {
-        $file_data = $_FILES[$this->getName()];
-        return $file_data['name'] ? $file_data : false;
+        $this->value = $_FILES[$this->getName()];
     }
 
-    function selfValidate()
+    function validate()
     {
-        parent::selfValidate();
         $value = $this->getValue();
         $field = $this->isOptionDefined('label') ? $this->getOption('label') : $this->getName();
         $error = $value['error'];
@@ -50,6 +48,7 @@ class owFormFile extends owFormInput
                 $error_message='A PHP extension stopped the file "'.$field.'" upload';
                 break;
         }
+
         if ($error_message)
         {
             $this->addError($error_message);
@@ -59,10 +58,16 @@ class owFormFile extends owFormInput
     function submit()
     {
         $file_data = $this->getValue();
-        $uploadfile = $this->getOption('upload_dir_path') . basename($file_data['name']);
-        if (!move_uploaded_file($file_data['tmp_name'], $uploadfile))
+        $upload_file_relative_path = $this->getOption('upload_dir_path') . basename($file_data['name']);
+        $upload_file_absolute_path = $_SERVER['DOCUMENT_ROOT'] . $upload_file_relative_path;
+
+        if (!move_uploaded_file($file_data['tmp_name'], $upload_file_absolute_path))
         {
             eZDebug::writeError('Unable to move uploaded file !');
+        }
+        else
+        {
+            $this->value['upload_file_path'] = $upload_file_relative_path;
         }
     }
 
