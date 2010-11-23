@@ -74,14 +74,15 @@ abstract class owFormElement
 
     function addRequiredError()
     {
-        $this->addError($this->getName() . ' is required');
+        $label = $this->isOptionDefined('label') ? $this->getLabel() : $this->getName();
+        $this->addError($label . ' is required');
     }
-
+    
     function getName()
     {
         return $this->getOption('name');
     }
-
+    
     function getLabel()
     {
         return $this->getOption('label');
@@ -128,9 +129,15 @@ abstract class owFormElement
     }
 
     abstract function checkRequired();
-
+    
+    function setValueFromRequest()
+    {
+        // do nothing
+    }
+    
     function validate()
     {
+        $this->setValueFromRequest();
         $this->checkRequired();
         $validation_methods = $this->getOption('validation');
         if ($validation_methods)
@@ -180,7 +187,7 @@ abstract class owFormElement
     {
         if (!array_key_exists($required_option, $options))
         {
-            eZDebug::writeError('"' . $required_option . '" is a required option for input!');
+            eZDebug::writeError('"' . $required_option . '" is a required option for ' . get_class($this). ' element!');
         }
     }
 
@@ -188,13 +195,13 @@ abstract class owFormElement
     {
         //do nothing
     }
-
+    
     function isMultipartForm()
     {
         return false;
     }
-
-    function getMainForm()
+    
+function getMainForm()
     {
         if (is_object($this->parent_form_element))
         {
@@ -214,7 +221,7 @@ abstract class owFormElement
     {
         return array();
     }
-
+    
 }
 
 ?>

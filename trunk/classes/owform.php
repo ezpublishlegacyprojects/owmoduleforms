@@ -11,8 +11,11 @@ abstract class owForm extends owFormContainer
 
     abstract function init();
 
+    abstract function doProcess();
+
     function __construct($options=array())
     {
+        $this->checkForRequiredOption('module', $options);
         $this->setDefaultOption($options, 'method', self::FORM_GET_METHOD);
         parent::__construct($options);
         $form_html_attributes = array('onreset', 'onsubmit', 'action', 'name', 'method', 'accept', 'accept-charset', 'enctype');
@@ -28,29 +31,7 @@ abstract class owForm extends owFormContainer
 
     function render()
     {
-        $submittedButton = $this->getSubmittedButton();
-        if ($submittedButton)
-        {
-            foreach ($this->getSubmittedData() as $input)
-            {
-                $input->setValueFromRequest();
-            }
-            $this->validate();
-            if ($this->isValid())
-            {
-                $this->submit();
-                return $submittedButton->renderSubmit();
-            }
-            else
-            {
-                $this->tpl->setVariable('errors', $this->errors);
-                return $this->renderForm();
-            }
-        }
-        else
-        {
-            return $this->renderForm();
-        }
+        return $this->getSubmittedButton() ? $this->getSubmittedButton()->submit() : $this->renderForm();
     }
 
     public function renderForm()
@@ -68,7 +49,7 @@ abstract class owForm extends owFormContainer
     {
         $buttons_group = new owFormContainer(array('class' => 'buttonblock block float-break'));
         $buttons_group->addFormElement(new owFormSubmit());
-        $buttons_group->addFormElement(new owFormSubmit(array('name' => 'cancel', 'label' => 'Cancel')));
+        $buttons_group->addFormElement(new owFormCancel(array('module' => $this->getOption('module'))));
         $this->addFormElement($buttons_group);
     }
 

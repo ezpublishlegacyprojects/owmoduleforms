@@ -46,15 +46,19 @@ class registerForm extends owForm
 
     function initButtons()
     {
-        $variables = array('confirm_message' => 'Congratulations, your are now an eZPublish member!');
-        $submit = new owFormSubmit(array('value' => 'S\'inscrire', 'template_name' => 'register_confirm.tpl', 'variables' => $variables));
+        $submit = new owFormSubmit(array('value' => 'S\'inscrire'));
         $this->addFormElement($submit);
     }
 
+    function doProcess()
+    {
+        //do nothing
+    }
+    
 }
 
 $title = ezi18n( 'extension/owmoduleforms', 'Register user form' );
-$form = new registerForm(array('name' => 'register', 'method' => 'post', 'title' => $title));
+$form = new registerForm(array('name' => 'register', 'method' => 'post', 'title' => $title, 'module' => $Module));
 $Module->setTitle($title);
 
 $Result = array();

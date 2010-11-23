@@ -7,7 +7,7 @@
 		{include uri='design:owmoduleforms/owformdatetime.tpl' element=$element}
 	{elseif eq('owformmarkup', get_class($element))}
 		{include uri='design:owmoduleforms/owformmarkup.tpl' element=$element}
-    {elseif eq('owformsubmit', get_class($element))}
+    {elseif array('owformsubmit', 'owformcancel')|contains(get_class($element))}
         {include uri='design:owmoduleforms/owformsubmit.tpl' element=$element}
     {elseif eq('owforminputbutton', get_class($element))}
         {include uri='design:owmoduleforms/owforminputbutton.tpl' element=$element}

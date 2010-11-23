@@ -1,6 +1,6 @@
 {if is_set($form.options.title)}
-	<div class="maincontentheader">
-		<h1>{$form.options.title|i18n("design/owmoduleforms")}</h1>
+	<div class="attribute-header">
+		<h1 class="long">{$form.options.title|i18n("design/owmoduleforms")}</h1>
 	</div>
 {/if}
 <div class="owmoduleforms">

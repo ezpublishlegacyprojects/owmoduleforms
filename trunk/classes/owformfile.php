@@ -18,7 +18,7 @@ class owFormFile extends owFormInput
     function validate()
     {
         $value = $this->getValue();
-        $field = $this->isOptionDefined('label') ? $this->getOption('label') : $this->getName();
+        $field = $this->isOptionDefined('label') ? $this->getLabel('label') : $this->getName();
         $error = $value['error'];
 
         switch ($error)
@@ -59,7 +59,7 @@ class owFormFile extends owFormInput
     {
         $file_data = $this->getValue();
         $upload_file_relative_path = $this->getOption('upload_dir_path') . basename($file_data['name']);
-        $upload_file_absolute_path = $_SERVER['DOCUMENT_ROOT'] . $upload_file_relative_path;
+        $upload_file_absolute_path = eZSys::rootDir() . '/' . $upload_file_relative_path;
 
         if (!move_uploaded_file($file_data['tmp_name'], $upload_file_absolute_path))
         {

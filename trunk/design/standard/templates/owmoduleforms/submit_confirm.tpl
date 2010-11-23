@@ -7,9 +7,13 @@
     <div class="border-ml">
         <div class="border-mr">
             <div class="border-mc float-break">
-                <div class="owmoduleforms">
-                    <h1>{$confirm_message}</h1>
-                    <h2>Your submitted data:</h2>
+                <div class="owmoduleforms feedback">
+                	<div class="attribute-header">
+						<h1 class="long">{$confirm_message}</h1>
+					</div>
+					<div class="feedback">
+                    	<h2>Your submitted data:</h2>
+					</div>
                     <ul>
                         {foreach $submitted_data as $data}
                             <li><strong>{$data.label}:</strong>

@@ -1,1 +1,1 @@
-{include uri='design:owmoduleforms/html_form.tpl' form_elements=$form_elements}
+{include uri='design:owmoduleforms/html_form.tpl'}

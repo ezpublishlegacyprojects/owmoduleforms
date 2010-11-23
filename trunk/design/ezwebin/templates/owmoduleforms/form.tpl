@@ -8,7 +8,7 @@
 		<div class="border-mr">
 			<div class="border-mc float-break">
 				<div class="owmoduleforms">
-					{include uri='design:owmoduleforms/html_form.tpl' form_elements=$form_elements}
+					{include uri='design:owmoduleforms/html_form.tpl'}
 				</div>
 			</div>
 		</div>
