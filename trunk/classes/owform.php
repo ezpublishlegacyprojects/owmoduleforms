@@ -8,6 +8,7 @@ abstract class owForm extends owFormContainer
     const FORM_POST_METHOD = 'post';
 
     var $tpl;
+    var $token;
 
     abstract function init();
 
@@ -21,6 +22,7 @@ abstract class owForm extends owFormContainer
         $form_html_attributes = array('onreset', 'onsubmit', 'action', 'name', 'method', 'accept', 'accept-charset', 'enctype');
         $this->available_html_attributes = array_merge($this->available_html_attributes, $form_html_attributes);
         $this->tpl = eZTemplate::factory();
+        $this->initToken();
         $this->init();
         $this->initButtons();
         if ($this->isMultipartForm())
@@ -61,6 +63,16 @@ abstract class owForm extends owFormContainer
     function getFormTemplate()
     {
         return $this->tpl;
+    }
+
+    function initToken()
+    {
+        $http = eZHTTPTool::instance();
+        $this->token = md5(uniqid(rand(), true));
+        $http->setSessionVariable('owmoduleforms_token', $this->token);
+        $http->setSessionVariable('owmoduleforms_token_time', time());
+        $token_form_element = new owFormHidden(array('name' => 'owmoduleforms_token', 'value' => $this->token));
+        $this->addFormElement($token_form_element);
     }
 
 }
