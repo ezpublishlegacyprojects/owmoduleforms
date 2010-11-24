@@ -3,7 +3,6 @@
 abstract class owFormElement
 {
     var $errors;
-    var $parent_form_element;
     var $options;
     var $available_html_attributes;
 
@@ -12,7 +11,6 @@ abstract class owFormElement
         $this->available_html_attributes = array('accesskey', 'class', 'dir', 'id', 'lang', 'style', 'tabindex', 'title', 'xml:lang');
         $this->options = $options;
         $this->errors = array();
-        $this->setParentFormElement(false);
     }
 
     function isOptionDefined($option_name)
@@ -23,11 +21,6 @@ abstract class owFormElement
     function getOption($option_name)
     {
         return $this->isOptionDefined($option_name) ? $this->options[$option_name] : false;
-    }
-
-    function setParentFormElement($form_element)
-    {
-        $this->parent_form_element = $form_element;
     }
 
     function attributes()
@@ -52,16 +45,6 @@ abstract class owFormElement
         }
     }
 
-    function getFormMethod()
-    {
-        return $this->parent_form_element->getFormMethod();
-    }
-
-    function getFormTemplate()
-    {
-        return $this->parent_form_element->getFormTemplate();
-    }
-
     function isValid()
     {
         return empty($this->errors);
@@ -77,12 +60,12 @@ abstract class owFormElement
         $label = $this->isOptionDefined('label') ? $this->getLabel() : $this->getName();
         $this->addError($label . ' is required');
     }
-    
+
     function getName()
     {
         return $this->getOption('name');
     }
-    
+
     function getLabel()
     {
         return $this->getOption('label');
@@ -129,16 +112,14 @@ abstract class owFormElement
     }
 
     abstract function checkRequired();
-    
-    function setValueFromRequest()
+
+    function setValueFromRequest($http_method)
     {
         // do nothing
     }
-    
-    function validate()
+
+    function validate($http_method)
     {
-        $this->setValueFromRequest();
-        $this->checkRequired();
         $validation_methods = $this->getOption('validation');
         if ($validation_methods)
         {
@@ -191,37 +172,21 @@ abstract class owFormElement
         }
     }
 
-    function submit()
-    {
-        //do nothing
-    }
-    
     function isMultipartForm()
     {
         return false;
-    }
-    
-function getMainForm()
-    {
-        if (is_object($this->parent_form_element))
-        {
-            return $this->parent_form_element->getMainForm();
-        }
-        elseif ($this instanceof owForm)
-        {
-            return $this;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     function getSubmittedData()
     {
         return array();
     }
-    
+
+    function processSubmit()
+    {
+        //do nothing
+    }
+
 }
 
 ?>

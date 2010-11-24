@@ -2,6 +2,7 @@
 
 class owFormSubmit extends owFormInput
 {
+
     public function __construct($options=array())
     {
         $this->setDefaultOption($options, 'name', 'submit');
@@ -16,12 +17,12 @@ class owFormSubmit extends owFormInput
         return array_key_exists($this->getName(), $_REQUEST) ? $this : false;
     }
 
-    function submit()
+    function submit($form)
     {
-        $form = $this->getMainForm();
-        $form->validate();
+        $form->validate($form->getHttpFormMethod());
         if ($form->isValid())
         {
+            $form->processSubmit();
             $form->doProcess();
             return $this->renderSubmit($form);
         }
@@ -30,7 +31,7 @@ class owFormSubmit extends owFormInput
             return $form->renderForm();
         }
     }
-    
+
     function renderSubmit($form)
     {
         $tpl = $form->getFormTemplate();

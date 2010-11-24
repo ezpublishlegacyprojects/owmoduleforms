@@ -31,7 +31,7 @@ abstract class owForm extends owFormContainer
 
     function render()
     {
-        return $this->getSubmittedButton() ? $this->getSubmittedButton()->submit() : $this->renderForm();
+        return $this->getSubmittedButton() ? $this->getSubmittedButton()->submit($this) : $this->renderForm();
     }
 
     public function renderForm()
@@ -53,7 +53,7 @@ abstract class owForm extends owFormContainer
         $this->addFormElement($buttons_group);
     }
 
-    function getFormMethod()
+    function getHttpFormMethod()
     {
         return $this->getOption('method');
     }

@@ -10,12 +10,12 @@ class owFormFile extends owFormInput
         $this->available_html_attributes = array_merge($this->available_html_attributes, array('accept', 'readonly'));
     }
 
-    function setValueFromRequest()
+    function setValueFromRequest($http_method)
     {
         $this->value = $_FILES[$this->getName()];
     }
 
-    function validate()
+    function validate($http_method)
     {
         $value = $this->getValue();
         $field = $this->isOptionDefined('label') ? $this->getLabel('label') : $this->getName();
@@ -55,7 +55,7 @@ class owFormFile extends owFormInput
         }
     }
 
-    function submit()
+    function processSubmit()
     {
         $file_data = $this->getValue();
         $upload_file_relative_path = $this->getOption('upload_dir_path') . basename($file_data['name']);

@@ -10,7 +10,7 @@ class owFormCancel extends owFormSubmit
         parent::__construct($options);
     }
 
-    function submit()
+    function submit($form)
     {
         if ($this->isOptionDefined('module'))
         {

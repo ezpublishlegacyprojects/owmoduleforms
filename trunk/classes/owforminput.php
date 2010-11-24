@@ -21,7 +21,7 @@ abstract class owFormInput extends owFormElement
 
         $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
         $this->http = eZHTTPTool::instance();
-        $this->value = $this->getOption('default_value');
+        $this->value = $this->getOption('default');
     }
 
     function getSubmittedButton()
@@ -34,17 +34,9 @@ abstract class owFormInput extends owFormElement
         return $this->value;
     }
 
-    function setValueFromRequest()
+    function setValueFromRequest($http_method)
     {
-        $method = $this->getFormMethod();
-        if (owForm::FORM_GET_METHOD == $method)
-        {
-            $this->value = $this->http->getVariable($this->getName(), false);
-        }
-        else
-        {
-            $this->value = $this->http->variable($this->getName(), false);
-        }
+        $this->value = (owForm::FORM_GET_METHOD == $http_method) ? $this->http->getVariable($this->getName(), false) : $this->http->variable($this->getName(), false);
     }
 
     function validateEmail()

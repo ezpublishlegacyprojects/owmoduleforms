@@ -16,12 +16,11 @@ class owFormContainer extends owFormElement
     {
         if ($element instanceof owFormElement)
         {
-            $element->setParentFormElement($this);
             $this->form_elements[] = $element;
         }
         else
         {
-            //TODO deal with exceptions
+            eZDebug::writeError('Unable to add element ' . get_class($element));
         }
     }
 
@@ -37,12 +36,13 @@ class owFormContainer extends owFormElement
         return false;
     }
 
-    function validate()
+    function validate($http_method)
     {
-        parent::validate();
         foreach ($this->children() as $element)
         {
-            $element->validate();
+            $element->setValueFromRequest($http_method);
+            $element->checkRequired();
+            $element->validate($http_method);
             foreach ($element->errors as $error)
             {
                 if (!array_key_exists('children_errors', $this->errors))
@@ -52,19 +52,13 @@ class owFormContainer extends owFormElement
                 $this->errors['children_errors'][] = $error;
             }
         }
+        $this->checkRequired();
+        parent::validate($http_method);
     }
 
     function children()
     {
         return $this->form_elements;
-    }
-
-    function submit()
-    {
-        foreach($this->children() as $element)
-        {
-            $element->submit();
-        }
     }
 
     function checkRequired()
@@ -114,6 +108,14 @@ class owFormContainer extends owFormElement
             }
         }
         return $valued_elements;
+    }
+
+    function processSubmit()
+    {
+        foreach ($this->children() as $child)
+        {
+            $child->processSubmit();
+        }
     }
 }
 
