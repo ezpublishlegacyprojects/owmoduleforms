@@ -9,6 +9,9 @@ abstract class owForm extends owFormContainer
 
     var $tpl;
     var $token;
+    var $token_form_element;
+    var $http;
+    var $ini;
 
     abstract function init();
 
@@ -22,6 +25,8 @@ abstract class owForm extends owFormContainer
         $form_html_attributes = array('onreset', 'onsubmit', 'action', 'name', 'method', 'accept', 'accept-charset', 'enctype');
         $this->available_html_attributes = array_merge($this->available_html_attributes, $form_html_attributes);
         $this->tpl = eZTemplate::factory();
+        $this->http = eZHTTPTool::instance();
+        $this->ini = eZIni::instance('owmoduleforms.ini');
         $this->initToken();
         $this->init();
         $this->initButtons();
@@ -67,12 +72,38 @@ abstract class owForm extends owFormContainer
 
     function initToken()
     {
-        $http = eZHTTPTool::instance();
-        $this->token = md5(uniqid(rand(), true));
-        $http->setSessionVariable('owmoduleforms_token', $this->token);
-        $http->setSessionVariable('owmoduleforms_token_time', time());
-        $token_form_element = new owFormHidden(array('name' => 'owmoduleforms_token', 'value' => $this->token));
-        $this->addFormElement($token_form_element);
+        $tokenTimeToLive = $this->ini->hasVariable( 'FormSettings', 'TokenTimeToLive' ) ?  intval($this->ini->variable( 'FormSettings', 'TokenTimeToLive' )) : 0;
+        if ($this->http->sessionVariable('owmoduleforms_token_time') < time() - $tokenTimeToLive)
+        {
+            $this->token = md5(uniqid(rand(), true));
+            $this->http->setSessionVariable('owmoduleforms_token', $this->token);
+            $this->http->setSessionVariable('owmoduleforms_token_time', time());
+        }
+        else
+        {
+            $this->token = $this->http->sessionVariable('owmoduleforms_token');
+        }
+        $this->token_form_element = new owFormHidden(array('name' => 'owmoduleforms_token', 'value' => $this->token));
+        $this->addFormElement($this->token_form_element);
+    }
+
+    function validate($http_method)
+    {
+        parent::validate($http_method);
+        $token_in_session = $this->http->sessionVariable('owmoduleforms_token');
+        $token_time_in_session = $this->http->sessionVariable('owmoduleforms_token_time');
+        $token_in_request = $this->token_form_element->getValue();
+
+        if ($token_in_session != $token_in_request)
+        {
+            $this->addError('Invalid form token');
+        }
+
+        $referrer = $_SERVER['HTTP_REFERER'];
+        if (!strstr($referrer, eZSys::requestURI()) || !strstr($referrer, eZSys::serverURL()))
+        {
+            $this->addError('Invalid http referer');
+        }
     }
 
 }
