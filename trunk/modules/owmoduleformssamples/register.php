@@ -11,16 +11,13 @@ class registerForm extends owForm
         $this->addFormElement($lastname);
 
         $user_account = new owFormFieldset(
-            array(
+        array(
                 'legend' => 'User account',
                 'class' => 'password_container',
                 'validation' => array(
-                    'custom' => array(
-                        'name' => 'samePasswordsValidator',
-                        'params' => array('password', 'password_again'),
-                    )
-                )
-            )
+                        'owSamePasswordsValidator' => array('password', 'password_again'),
+        )
+        )
         );
         $login = new owFormText(array('name' => 'login', 'label'=> 'Login', 'required' => true, 'size' => 16));
         $password = new owFormPassword(array('name' => 'password', 'label' => 'Password', 'required' => true, 'size' => 16));
@@ -54,7 +51,7 @@ class registerForm extends owForm
     {
         //do nothing
     }
-    
+
 }
 
 $title = ezi18n( 'extension/owmoduleforms', 'Register user form' );

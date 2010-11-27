@@ -84,33 +84,6 @@ abstract class owFormElement
         }
     }
 
-    function validateCustom($validation_params)
-    {
-        $validator_class_name = array_key_exists('name', $validation_params) ? $validation_params['name'] : false;
-        $validator_params = array_key_exists('params', $validation_params) ? $validation_params['params'] : array();
-        if ($validator_class_name)
-        {
-            try
-            {
-                $reflection = new ReflectionClass($validator_class_name);
-                $customValidator = $reflection->newInstance($this, $validator_params);
-                if (!$customValidator->validate())
-                {
-                    $error = $this->getName() . $customValidator->getErrorMessage();
-                    $this->addError($error);
-                }
-            }
-            catch (Exception $e)
-            {
-                eZDebug::writeError('custom validator class ' . $validator_class_name. ' does not exist');
-            }
-        }
-        else
-        {
-            eZDebug::writeError('unable to find custom validator class');
-        }
-    }
-
     abstract function checkRequired();
 
     function setValueFromRequest($http_method)
@@ -120,39 +93,25 @@ abstract class owFormElement
 
     function validate($http_method)
     {
-        $validation_methods = $this->getOption('validation');
-        if ($validation_methods)
+        $validations = $this->getOption('validation');
+        if ($validations)
         {
-            foreach ($validation_methods as $index => $validation_method)
+            foreach ($validations as $validator_class_name => $params)
             {
-                if (is_array($validation_method))
+                try
                 {
-                    $method_name = $index;
-                    $validation_params = $validation_method;
+                    $reflection = new ReflectionClass($validator_class_name);
+                    $customValidator = $reflection->newInstance($this, $params);
+                    if (!$customValidator->validate())
+                    {
+                        $output = $this->isOptionDefined('label') ? $this->getLabel() : $this->getName();
+                        $error = '"' . $output . '"' . $customValidator->getErrorMessage();
+                        $this->addError($error);
+                    }
                 }
-                else
+                catch (Exception $e)
                 {
-                    $method_name = $validation_method;
-                    $validation_params = array();
-                }
-
-                switch($method_name)
-                {
-                    case 'email' :
-                        $this->validateEmail();
-                        break;
-                    case 'integer' :
-                        $this->validateNumeric('integer', $validation_params);
-                        break;
-                    case 'float' :
-                        $this->validateNumeric('float', $validation_params);
-                        break;
-                    case 'alpha' :
-                        $this->validateAlphanumericString();
-                        break;
-                    case 'custom' :
-                        $this->validateCustom($validation_params);
-                        break;
+                    eZDebug::writeError('form validator class ' . $validator_class_name. ' does not exist');
                 }
             }
         }

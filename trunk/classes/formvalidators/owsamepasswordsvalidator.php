@@ -1,6 +1,6 @@
 <?php
 
-class samePasswordsValidator extends owFormValidator
+class owSamePasswordsValidator extends owFormValidator
 {
 
     function validate()

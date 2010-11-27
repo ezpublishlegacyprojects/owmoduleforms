@@ -2,7 +2,6 @@
 
 abstract class owFormValidator
 {
-
     var $form_element;
     var $params;
 
@@ -20,7 +19,6 @@ abstract class owFormValidator
     abstract function getErrorMessage();
 
     abstract function validate();
-
 }
 
 ?>

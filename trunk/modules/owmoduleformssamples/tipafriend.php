@@ -14,10 +14,16 @@ class tipAFriendForm extends owForm
             $default_email = $user->attribute( 'email' );
         }
 
-        $name = new owFormText(array('name' => 'name', 'label' => 'Your Name', 'default' => $default_name));
+        $name = new owFormText(array('name' => 'name', 'label' => 'Your Name', 'default' => $default_name,'validation' => array(
+                        'owIntegerValidator' => array('max' => 24, 'min' => 12)
+                    )
+                ));
         $this->addFormElement($name);
 
-        $sender_email = new owFormText(array('name' => 'sender_email', 'label' => 'Your email address', 'required' => true, 'default' => $default_email));
+        $sender_email = new owFormText(array('name' => 'sender_email', 'label' => 'Your email address', 'required' => true, 'default' => $default_email,'validation' => array(
+                        'owEmailValidator' => array()
+                    )
+                ));
         $this->addFormElement($sender_email);
 
         $receivers_email = new owFormText(array('name' => 'receivers_email', 'label' => 'Receivers email address', 'required' => true));
