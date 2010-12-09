@@ -7,17 +7,13 @@ abstract class owForm extends owFormContainer
     const FORM_GET_METHOD = 'get';
     const FORM_POST_METHOD = 'post';
 
-    var $tpl;
-    var $token;
-    var $token_form_element;
     var $http;
     var $ini;
-
-    abstract function init();
-
-    abstract function doProcess();
-
-    function __construct($options=array())
+    var $token;
+    var $token_form_element;
+    var $tpl;
+    
+    public function __construct($options=array())
     {
         $this->checkForRequiredOption('module', $options);
         $this->setDefaultOption($options, 'method', self::FORM_GET_METHOD);
@@ -36,15 +32,16 @@ abstract class owForm extends owFormContainer
         }
     }
 
-    function render()
-    {
-        return $this->getSubmittedButton() ? $this->getSubmittedButton()->submit($this) : $this->renderForm();
-    }
+    public abstract function doProcess();
 
-    public function renderForm()
+    public function getFormTemplate()
     {
-        $this->tpl->setVariable('form', $this);
-        return $this->tpl->fetch( "design:owmoduleforms/form.tpl" );
+        return $this->tpl;
+    }
+    
+    public function getHttpFormMethod()
+    {
+        return $this->getOption('method');
     }
 
     public function getTemplate()
@@ -52,25 +49,9 @@ abstract class owForm extends owFormContainer
         return $this->tpl;
     }
 
-    function initButtons()
-    {
-        $buttons_group = new owFormContainer(array('class' => 'buttonblock block float-break'));
-        $buttons_group->addFormElement(new owFormSubmit());
-        $buttons_group->addFormElement(new owFormCancel(array('module' => $this->getOption('module'))));
-        $this->addFormElement($buttons_group);
-    }
+    public abstract function init();
 
-    function getHttpFormMethod()
-    {
-        return $this->getOption('method');
-    }
-
-    function getFormTemplate()
-    {
-        return $this->tpl;
-    }
-
-    function initToken()
+    private function initToken()
     {
         $tokenTimeToLive = $this->ini->hasVariable( 'FormSettings', 'TokenTimeToLive' ) ?  intval($this->ini->variable( 'FormSettings', 'TokenTimeToLive' )) : 0;
         if ($this->http->sessionVariable('owmoduleforms_token_time') < time() - $tokenTimeToLive)
@@ -87,7 +68,26 @@ abstract class owForm extends owFormContainer
         $this->addFormElement($this->token_form_element);
     }
 
-    function validate($http_method)
+    private function initButtons()
+    {
+        $buttons_group = new owFormContainer(array('class' => 'buttonblock block float-break'));
+        $buttons_group->addFormElement(new owFormSubmit());
+        $buttons_group->addFormElement(new owFormCancel(array('module' => $this->getOption('module'))));
+        $this->addFormElement($buttons_group);
+    }
+
+    public function render()
+    {
+        return $this->getSubmittedButton() ? $this->getSubmittedButton()->submit($this) : $this->renderForm();
+    }
+
+    public function renderForm()
+    {
+        $this->tpl->setVariable('form', $this);
+        return $this->tpl->fetch( "design:owmoduleforms/form.tpl" );
+    }
+
+    public function validate($http_method)
     {
         parent::validate($http_method);
         $token_in_session = $this->http->sessionVariable('owmoduleforms_token');

@@ -12,17 +12,18 @@ class registerForm extends owForm
 
         $user_account = new owFormFieldset(
         array(
+                'id' => 'passwords',
                 'legend' => 'User account',
                 'class' => 'password_container',
                 'validation' => array(
-                        'owSamePasswordsValidator' => array('password', 'password_again'),
+                        'owSamePasswordsValidator' => array('password' => 'child', 'password_again' => 'child'),
         )
         )
         );
         $login = new owFormText(array('name' => 'login', 'label'=> 'Login', 'required' => true, 'size' => 16));
         $password = new owFormPassword(array('name' => 'password', 'label' => 'Password', 'required' => true, 'size' => 16));
         $password_again = new owFormPassword(array('name' => 'password_again', 'label' => 'Confirm password', 'size' => 16));
-        $email = new owFormText(array('name' => 'email', 'label' => 'E-mail', 'required' => true, 'validation' => array('email')));
+        $email = new owFormText(array('name' => 'email', 'label' => 'E-mail', 'required' => true, 'validation' => array('owEmailValidator' => array())));
 
         $user_account->addFormElement($login);
         $user_account->addFormElement($password);

@@ -2,23 +2,23 @@
 
 abstract class owFormValidator
 {
-    var $form_element;
+    var $input_value;
     var $params;
 
-    function __construct($form_element, $params=array())
+    public function __construct($input_value, $params=array())
     {
-        $this->form_element = $form_element;
+        $this->input_value = $input_value;
         $this->params = $params;
     }
 
-    function getParams()
+    public abstract function getErrorMessage();
+    
+    public function getParams()
     {
         return $this->params;
     }
 
-    abstract function getErrorMessage();
-
-    abstract function validate();
+    public abstract function validate();
 }
 
 ?>

@@ -3,7 +3,7 @@
 class owFormDatetime extends owFormFieldset
 {
     
-    function __construct($options=array())
+    public function __construct($options=array())
     {
         $this->checkForRequiredOption('name', $options);
         $name = $options['name'];

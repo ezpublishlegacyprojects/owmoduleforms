@@ -3,7 +3,7 @@
 class owFormTextarea extends owFormInput
 {
 
-    function __construct($options=array())
+    public function __construct($options=array())
     {
         $this->checkForRequiredOption('cols', $options);
         $this->checkForRequiredOption('rows', $options);

@@ -4,89 +4,34 @@ class tipAFriendForm extends owForm
 {
     function init()
     {
-        $user = eZUser::currentUser();
-        $ini = eZINI::instance();
-        // Get name and email from current user, unless it is the anonymous user
-        if ( is_object( $user ) && $user->id() != $ini->variable( 'UserSettings', 'AnonymousUserID' ) )
-        {
-            $userObject = $user->attribute( 'contentobject' );
-            $default_name = $userObject->attribute( 'name' );
-            $default_email = $user->attribute( 'email' );
-        }
-
-        $name = new owFormText(array('name' => 'name', 'label' => 'Your Name', 'default' => $default_name,'validation' => array(
-                        'owIntegerValidator' => array('max' => 24, 'min' => 12)
-                    )
-                ));
+        $name = new owFormText(array('name' => 'name', 'label' => 'Your Name', 'validation' => array(
+        	'owMaxLengthValidator' => array('length' => 4),
+            'owMinLengthValidator' => array('length' => 6))));
         $this->addFormElement($name);
-
-        $sender_email = new owFormText(array('name' => 'sender_email', 'label' => 'Your email address', 'required' => true, 'default' => $default_email,'validation' => array(
-                        'owEmailValidator' => array()
-                    )
-                ));
+        
+        $age =  new owFormText(array('name' => 'age', 'label' => 'Your Age', 'validation' => array('owIntegerValidator' => array('max' => 77, 'min' => 7))));
+        $this->addFormElement($age);
+                
+        $sender_email = new owFormText(array('name' => 'sender_email', 'label' => 'Your email address', 'required' => true, 'validation' => array('owEmailValidator' => array())));
         $this->addFormElement($sender_email);
 
         $receivers_email = new owFormText(array('name' => 'receivers_email', 'label' => 'Receivers email address', 'required' => true));
         $this->addFormElement($receivers_email);
 
-        $comment = new owFormTextarea(array('name' => 'comment', 'label' => 'Comment', 'cols' => 40, 'rows' => 10));
+        $comment = new owFormTextarea(array('name' => 'comment', 'label' => 'Comment', 'cols' => 40, 'rows' => 5));
         $this->addFormElement($comment);
 
-        /*$send = new owFormInputButton(array('name' => 'send', 'label' => 'Send'));
-         $this->addFormElement($send);*/
     }
 
     function doProcess()
     {
-        $submitted_data = $this->getSubmittedData();
-        $NodeID = $this->getOption('node_id');
-        $nodeName = $this->getOption('node_name');
-        $hostName = eZSys::hostname();
-        $subject = ezpI18n::tr( 'kernel/content', 'Tip from %1: %2', null, array( $hostName, $nodeName ) );
-        $fromEmail = null;
-        $ini = eZINI::instance();
-
-        if ( $ini->hasVariable( 'TipAFriend', 'FromEmail' ) )
-        {
-            $fromEmail = $ini->variable( 'TipAFriend', 'FromEmail' );
-            if ( $fromEmail != null )
-            if ( !eZMail::validate( $fromEmail ) )
-            {
-                eZDebug::writeError( "The email < $fromEmail > specified in [TipAFriend].FromEmail setting in site.ini is not valid",'tipafriend' );
-                $fromEmail = null;
-            }
-        }
-        if ( $fromEmail == null )
-        {
-            $fromEmail = $submitted_data['sender_email']->getValue();
-        }
+        //do nothing
     }
 
 }
 
-$http = eZHTTPTool::instance();
-$NodeID = (int)$Params['NodeID'];
-if ( $http->hasPostVariable( 'NodeID' ) )
-$NodeID = (int)$http->variable( 'NodeID' );
-
-$node = eZContentObjectTreeNode::fetch( $NodeID );
-if ( is_object( $node ) )
-{
-    $nodeName = $node->getName();
-}
-else
-{
-    return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
-}
-
-$object = $node->object();
-if ( !$object->canRead() )
-{
-    return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel', array( 'AccessList' => $object->accessList( 'read' ) ) );
-}
-
 $title = ezi18n( 'extension/owmoduleforms', 'Tip a friend' );
-$tipAFriendForm = new tipAFriendForm(array('name' => 'sendtofriend', 'method' => 'post', 'title' => $title, 'module' => $Module, 'node_id' => $NodeID, 'node_name' => $nodeName));
+$tipAFriendForm = new tipAFriendForm(array('name' => 'sendtofriend', 'method' => 'post', 'title' => $title, 'module' => $Module));
 $Module->setTitle($title);
 
 $Result = array();

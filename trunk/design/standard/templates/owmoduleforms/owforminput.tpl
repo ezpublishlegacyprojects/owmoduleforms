@@ -10,7 +10,7 @@
 				</label>
 	    	{/if}
 		    {include uri=concat('design:owmoduleforms/', $type, '.tpl') element=$element}
-		    {include uri='design:owmoduleforms/form_errors.tpl' errors=$element.errors}
+		    {include uri='design:owmoduleforms/form_errors.tpl' errors=$element.errors id=$element.options.id input=$element type='element'}
 	    </div>
 	</div>
 {undef $type}

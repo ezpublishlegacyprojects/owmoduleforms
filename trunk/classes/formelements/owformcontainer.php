@@ -12,7 +12,7 @@ class owFormContainer extends owFormElement
         $this->form_elements = array();
     }
 
-    function addFormElement($element)
+    public function addFormElement($element)
     {
         if ($element instanceof owFormElement)
         {
@@ -24,44 +24,7 @@ class owFormContainer extends owFormElement
         }
     }
 
-    function getSubmittedButton()
-    {
-        foreach ($this->children() as $element)
-        {
-            if ( $button = $element->getSubmittedButton())
-            {
-                return $button;
-            }
-        }
-        return false;
-    }
-
-    function validate($http_method)
-    {
-        foreach ($this->children() as $element)
-        {
-            $element->setValueFromRequest($http_method);
-            $element->checkRequired();
-            $element->validate($http_method);
-            foreach ($element->errors as $error)
-            {
-                if (!array_key_exists('children_errors', $this->errors))
-                {
-                    $this->errors['children_errors'] = array();
-                }
-                $this->errors['children_errors'][] = $error;
-            }
-        }
-        $this->checkRequired();
-        parent::validate($http_method);
-    }
-
-    function children()
-    {
-        return $this->form_elements;
-    }
-
-    function checkRequired()
+    public function checkRequired()
     {
         $is_empty = false;
         if ($this->isRequired())
@@ -81,7 +44,51 @@ class owFormContainer extends owFormElement
         }
     }
 
-    function isMultipartForm()
+    public function children()
+    {
+        return $this->form_elements;
+    }
+
+    public function getSubmittedButton()
+    {
+        foreach ($this->children() as $element)
+        {
+            if ( $button = $element->getSubmittedButton())
+            {
+                return $button;
+            }
+        }
+        return false;
+    }
+
+    public function getSubmittedData()
+    {
+        $valued_elements = array();
+        foreach($this->children() as $child)
+        {
+            if ($child instanceof owFormInput)
+            {
+                $valued_elements[$child->getName()] = $child;
+            }
+            else
+            {
+                $valued_elements = array_merge($valued_elements, $child->getSubmittedData());
+            }
+        }
+        return $valued_elements;
+    }
+
+    public function getValue()
+    {
+        $value = array();
+        foreach($this->children() as $child)
+        {
+            $value[$child->getName()] = $child->getValue();
+        }
+        return $value;
+    }
+
+    public function isMultipartForm()
     {
         foreach ($this->children() as $element)
         {
@@ -93,30 +100,34 @@ class owFormContainer extends owFormElement
         return false;
     }
 
-    function getSubmittedData()
-    {
-        $valued_elements = array();
-        foreach($this->children() as $child)
-        {
-            if ($child instanceof owFormInput)
-            {
-                $valued_elements[] = $child;
-            }
-            else
-            {
-                $valued_elements = array_merge($valued_elements, $child->getSubmittedData());
-            }
-        }
-        return $valued_elements;
-    }
-
-    function processSubmit()
+    public function processSubmit()
     {
         foreach ($this->children() as $child)
         {
             $child->processSubmit();
         }
     }
+
+    public function validate($http_method)
+    {
+        foreach ($this->children() as $element)
+        {
+            $element->setValueFromRequest($http_method);
+            $element->checkRequired();
+            $element->validate($http_method);
+            foreach ($element->errors as $error)
+            {
+                if (!array_key_exists('children_errors', $this->errors))
+                {
+                    $this->errors['children_errors'] = array();
+                }
+                $this->errors['children_errors'][] = $error;
+            }
+        }
+        $this->checkRequired();
+        parent::validate($http_method);
+    }
+
 }
 
 ?>

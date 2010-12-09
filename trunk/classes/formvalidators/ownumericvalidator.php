@@ -4,18 +4,23 @@ abstract class owNumericValidator extends owFormValidator
 {
     var $error;
 
-    abstract function getValidator($min=false, $max=false);
-
-    abstract function getNumericType();
+    public function getErrorMessage()
+    {
+        return $this->error;
+    }
     
-    function validate()
+    public abstract function getNumericType();
+    
+    public abstract function getValidator($min=false, $max=false);
+
+    public function validate()
     {
         $params = $this->getParams();
         $min = array_key_exists('min', $params) ? $params['min'] : false;
         $max = array_key_exists('max', $params) ? $params['max'] : false;
         $validator = $this->getValidator($min, $max);
         $numeric_type = $this->getNumericType();
-        $isValid = eZInputValidator::STATE_ACCEPTED == $validator->validate($this->form_element->getValue());
+        $isValid = eZInputValidator::STATE_ACCEPTED == $validator->validate($this->input_value);
         
         if (!$isValid)
         {
@@ -37,11 +42,6 @@ abstract class owNumericValidator extends owFormValidator
             }
         }
         return $isValid;
-    }
-
-    function getErrorMessage()
-    {
-        return $this->error;
     }
 
 }

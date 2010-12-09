@@ -2,9 +2,9 @@
 
 abstract class owFormInput extends owFormElement
 {
-    var $value;
-    var $options;
     var $http;
+    var $options;
+    var $value;
 
     public function __construct($options=array())
     {
@@ -17,29 +17,14 @@ abstract class owFormInput extends owFormElement
         $html_common_input_attributes = array(
             'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onmousedown', 'onmousemove', 'onmouseout',
             'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup', 'onselect','disabled', 'size', 'name'
-        );
+            );
 
         $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
         $this->http = eZHTTPTool::instance();
         $this->value = $this->getOption('default');
     }
 
-    function getSubmittedButton()
-    {
-        return false;
-    }
-
-    function getValue()
-    {
-        return $this->value;
-    }
-
-    function setValueFromRequest($http_method)
-    {
-        $this->value = (owForm::FORM_GET_METHOD == $http_method) ? $this->http->getVariable($this->getName(), false) : $this->http->variable($this->getName(), false);
-    }
-
-    function checkRequired()
+    public function checkRequired()
     {
         $this->value = $this->getValue();
         if ($this->isRequired() && !$this->value)
@@ -48,9 +33,29 @@ abstract class owFormInput extends owFormElement
         }
     }
 
-    function getInputElements()
+    public function getInputElements()
     {
         return $this;
+    }
+
+    public function getSubmittedButton()
+    {
+        return false;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function setValueFromRequest($http_method)
+    {
+        //TODO gérer le problème des guillemets et des quotes
+        $get_variable = $this->http->getVariable($this->getName(), false);
+        $post_variable = $this->http->variable($this->getName(), false);
+        $http_value = (owForm::FORM_GET_METHOD == $http_method) ? $get_variable : $post_variable;
+        $this->value = addslashes($http_value);
+        echo $this->value . ' , ' . addslashes($this->value) .'<br/>';
     }
 
 }

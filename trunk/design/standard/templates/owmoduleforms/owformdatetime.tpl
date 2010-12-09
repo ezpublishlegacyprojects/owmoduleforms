@@ -47,6 +47,6 @@
 			{include uri='design:owmoduleforms/owforminput.tpl' element=$datetime.form_elements.3}
 			{include uri='design:owmoduleforms/owforminput.tpl' element=$datetime.form_elements.4}
 		</div>
-		{include uri='design:owmoduleforms/form_errors.tpl' errors=$datetime.errors}
+		{include uri='design:owmoduleforms/form_errors.tpl' errors=$datetime.errors id=$datetime.options.id input=$datetime type='container'}
 	</fieldset>
 {undef $datetime}

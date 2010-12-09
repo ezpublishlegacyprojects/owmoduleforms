@@ -9,3 +9,8 @@ div.owmoduleforms form .date .block .element label,
 div.owmoduleforms form .time .block .element label {width:auto;}
 div.owmoduleforms form .date .block .element input,
 div.owmoduleforms form .time .block .element input {margin:0 6px 0 0;}
+
+div.owmoduleforms-error, div.owmoduleforms-error-text { margin-left:10px; }
+div.owmoduleforms-error-text { color:red; }
+div.owmoduleforms-error, div.owmoduleforms-error-icon, div.owmoduleforms-error-text {float:left;}
+div.owmoduleforms-error-icon img {display:none;}

@@ -2,15 +2,15 @@
 
 class owEmailValidator extends owFormValidator
 {
-    
-    function validate()
-    {
-        return eZMail::validate( $this->form_element->getValue() ) ;
-    }
 
-    function getErrorMessage()
+    public function getErrorMessage()
     {
         return ' is not a valid email';
+    }
+
+    public function validate()
+    {
+        return eZMail::validate($this->input_value) ;
     }
 
 }

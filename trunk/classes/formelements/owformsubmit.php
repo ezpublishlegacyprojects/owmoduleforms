@@ -12,27 +12,12 @@ class owFormSubmit extends owFormInput
         parent::__construct($options);
     }
 
-    function getSubmittedButton()
+    public function getSubmittedButton()
     {
         return array_key_exists($this->getName(), $_REQUEST) ? $this : false;
     }
 
-    function submit($form)
-    {
-        $form->validate($form->getHttpFormMethod());
-        if ($form->isValid())
-        {
-            $form->processSubmit();
-            $form->doProcess();
-            return $this->renderSubmit($form);
-        }
-        else
-        {
-            return $form->renderForm();
-        }
-    }
-
-    function renderSubmit($form)
+    public function renderSubmit($form)
     {
         $tpl = $form->getFormTemplate();
         $variables = $this->getOption('variables');
@@ -49,9 +34,25 @@ class owFormSubmit extends owFormInput
                 'type' => get_class($element),
                 'value' => $element->getValue(),
             );
+            
         }
         $tpl->setVariable('submitted_data', $submitted_data);
         return $tpl->fetch('design:owmoduleforms/'.$this->getOption('template_name'));
+    }
+
+    public function submit($form)
+    {
+        $form->validate($form->getHttpFormMethod());
+        if ($form->isValid())
+        {
+            $form->processSubmit();
+            $form->doProcess();
+            return $this->renderSubmit($form);
+        }
+        else
+        {
+            return $form->renderForm();
+        }
     }
 
 }

@@ -3,7 +3,12 @@
 class owInArrayValidator extends owFormValidator
 {
 
-    function getValidItems()
+    public function getErrorMessage()
+    {
+        return ' is not a valid item (valid items are in: '.implode(',', $this->getValidItems()). ')';
+    }
+
+    public function getValidItems()
     {
         if (array_key_exists('valid_items', $this->params))
         {
@@ -16,14 +21,9 @@ class owInArrayValidator extends owFormValidator
         }
     }
 
-    function validate()
+    public function validate()
     {
-        return in_array($this->form_element->getValue(), $this->getValidItems());
-    }
-
-    function getErrorMessage()
-    {
-        return ' is not a valid item (valid items are in: '.implode(',', $this->getValidItems()). ')';
+        return in_array($this->input_value, $this->getValidItems());
     }
 
 }

@@ -7,7 +7,7 @@ $ViewList = array();
 
 $ViewList['tipafriend'] = array(
     'script' => 'tipafriend.php',
-    'params' => array( 'NodeID' ),
+    'params' => array(  ),
 );
 
 $ViewList['register'] = array(
