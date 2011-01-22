@@ -1,0 +1,28 @@
+- OW Module Forms 1.0.0 extension information
+
+About OW Module Forms
+=====================
+
+A set of skeleton classes to build easily forms in a module/view way.
+
+It allows to build forms with all standard input types (texts, textareas, radiobuttons,
+selects, checkboxes ...) and bind them validators. These validators work with jquery
+to make an instant validation and a submit validation.
+
+Technical information
+=====================
+
+    OW Module Forms uses:
+    - jQuery                            http://www.jquery.com
+    - PHP
+    - eZjscore extension
+
+Installation
+============
+
+See doc/INSTALL.txt
+
+Using OW Module Forms
+=====================
+
+TODO

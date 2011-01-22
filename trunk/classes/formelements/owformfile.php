@@ -47,25 +47,25 @@ class owFormFile extends owFormInput
                 $error_message=false;
                 break;
             case UPLOAD_ERR_INI_SIZE:
-                $error_message='The uploaded file exceeds the upload_max_filesize directive in php.ini ('.ini_get('upload_max_filesize').')';
+                $error_message='the uploaded file exceeds the upload_max_filesize directive in php.ini ('.ini_get('upload_max_filesize').')';
                 break;
             case UPLOAD_ERR_FORM_SIZE:
-                $error_message='The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form ('.$this->getOption('maxfilesize').')';
+                $error_message='the uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form ('.$this->getOption('maxfilesize').')';
                 break;
             case UPLOAD_ERR_PARTIAL:
-                $error_message='The uploaded file was only partially uploaded';
+                $error_message='the uploaded file was only partially uploaded';
                 break;
             case UPLOAD_ERR_NO_FILE:
-                $error_message='No file was uploaded';
+                $error_message='no file was uploaded';
                 break;
             case UPLOAD_ERR_NO_TMP_DIR:
-                $error_message='Missing a temporary folder';
+                $error_message='missing a temporary folder';
                 break;
             case UPLOAD_ERR_CANT_WRITE:
-                $error_message='Failed to write file to disk';
+                $error_message='failed to write file to disk';
                 break;
             case UPLOAD_ERR_EXTENSION:
-                $error_message='A PHP extension stopped the file upload';
+                $error_message='a PHP extension stopped the file upload';
                 break;
         }
 

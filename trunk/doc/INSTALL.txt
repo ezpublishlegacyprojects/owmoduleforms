@@ -1,0 +1,104 @@
+OW Module Forms extension INSTALL
+
+Requirements
+============
+
+The following requirements exists for using OW Module Forms extension:
+
+o  eZ Publish version:
+
+   eZ Publish 4.3 or higher.
+
+o  eZ Publish extensions:
+
+   ezjscore 1.2.0 or higher ( http://projects.ez.no/ezjscore )
+
+o  PHP version:
+
+   5.3.3 and higher
+
+   Make sure that Javascript support is enabled in your web browser.
+
+Installing OW Module Forms extension
+=========================================
+
+1. Download the owmoduleforms package.
+
+   Windows users should download the "zip" package. Linux/UNIX/OS X users may
+   download any package format as long as the necessary unpacking tools are
+   available.
+
+2. Copy the downloaded package into the 'extension' directory of your
+   eZ Publish installation.
+
+3. Unpack the files in the distribution.
+
+   Windows users should unzip the files. The 'ezoe' directory will be created
+   inside the 'extension' directory.
+
+   Linux users may use of the following commands depending on the file type:
+   [tar.gz]:
+   $ tar -zxvf owmoduleforms-[ExtensionVersion].tar.gz
+   [bz2]:
+   $ tar -jxvf owmoduleforms-[ExtensionVersion].bz2
+   [zip]:
+   $ unzip owmoduleforms-[ExtensionVersion].zip
+
+4. Enable the ezoe extension in eZ Publish.
+
+   To enable owmoduleforms for all of your siteaccesses, log in to your eZ Publish
+   administration interface, click on the 'Setup' tab, and then click
+   'Extensions' on the left. You will see the list of available extensions.
+   Select the 'owmoduleforms' item and click the 'Apply changes' button.
+   Aternatively, you can also edit the file 'site.ini.append.php' located
+   in the 'settings/override' directory. Add the following line under
+   the [ExtensionSettings] section:
+
+   ActiveExtensions[]=owmoduleforms
+
+   Create the file and/or the section if they do not exist.
+
+   To make owmoduleforms works fine with ezjscore, owmoduleforms must be enabled after ezjscore extension.
+   The final result must follow the following principle : 
+   
+     [ExtensionSettings]
+     ActiveExtensions[]=ezjscore
+     ActiveExtensions[]=owmoduleforms
+
+5. Regenerate autoload array
+
+   Update the class autoloads by running the script:
+   $ php bin/php/ezpgenerateautoloads.php
+
+6. Clear all the eZ Publish caches.
+
+   Log in to your eZ Publish administration interface, select the 'Setup' tab,
+   and then click the 'Clear all caches' button. If you use eZ Publish 3.6
+   or higher, you can also use the developer toolbar (if enabled) located
+   in the right hand side. Simply select 'All caches' from the drop-down list
+   and click the 'Clear' button.
+
+   Alternativly if you have PHP CLI installed, you can also do the following:
+
+   $ ./bin/php/ezcache.php --clear-all
+
+
+Troubleshooting
+===============
+
+1. Known issues
+   ------------
+
+   Ajax validation is not fully implemented with YUI javascript library.
+   For ajax validation, you need to enable jquery as preferred javascript library.
+   You can do this by modifying ezjscore configuration as follow:
+   
+   [eZJSCore]
+   PreferredLibrary=jquery
+
+2. Support
+   -------
+
+   If you have find any problems not handled by this document, FAQ and online
+   documentation you can contact eZ system trough the support system:
+   http://projects.ez.no/index.php/owmoduleforms/forum
