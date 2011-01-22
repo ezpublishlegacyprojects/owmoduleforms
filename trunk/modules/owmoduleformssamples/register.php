@@ -10,6 +10,9 @@ class registerForm extends owForm
         $lastname = new owFormText(array('name' => 'lastname', 'label' => 'Last Name', 'size' => 70));
         $this->addFormElement($lastname);
 
+        $email = new owFormText(array('name' => 'email', 'label' => 'E-mail', 'required' => true, 'validation' => array('owEmailValidator' => array())));
+        $this->addFormElement($email);
+        
         $user_account = new owFormFieldset(
         array(
                 'id' => 'passwords',
@@ -23,12 +26,10 @@ class registerForm extends owForm
         $login = new owFormText(array('name' => 'login', 'label'=> 'Login', 'required' => true, 'size' => 16));
         $password = new owFormPassword(array('name' => 'password', 'label' => 'Password', 'required' => true, 'size' => 16));
         $password_again = new owFormPassword(array('name' => 'password_again', 'label' => 'Confirm password', 'size' => 16));
-        $email = new owFormText(array('name' => 'email', 'label' => 'E-mail', 'required' => true, 'validation' => array('owEmailValidator' => array())));
 
         $user_account->addFormElement($login);
         $user_account->addFormElement($password);
         $user_account->addFormElement($password_again);
-        $user_account->addFormElement($email);
         $this->addFormElement($user_account);
 
         $signature = new owFormTextarea(array('name' => 'signature', 'label' => 'Your signature', 'cols' => 70, 'rows' => 10));

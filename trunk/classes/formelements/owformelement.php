@@ -31,7 +31,7 @@ abstract class owFormElement
         }
         else
         {
-            //TODO deal with exceptions
+           eZDebug::writeError('unable to retrieve attribute: "' . $attribute_name . '"');
         }
     }
 

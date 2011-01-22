@@ -66,8 +66,9 @@ function validate_input(is_required, input_id, post_data, fields, type)
 	        		for(var j=0; j < fields.length; j++)
 		        	{
 		        		var child_id = fields[j];
-		        		post_data[i][child_id] = $('#'+child_id).val();
-		        		children_values[child_id] = $('#'+child_id).val();
+		        		var child_value = $('#'+child_id).val();
+		        		post_data[i][child_id] = child_value;
+		        		children_values[child_id] = child_value;
 					}
 					post_data[i]['value'] = children_values;
 	    		}
