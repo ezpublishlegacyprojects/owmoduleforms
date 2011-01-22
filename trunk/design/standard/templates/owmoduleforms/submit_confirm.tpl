@@ -16,16 +16,17 @@
 					</div>
                     <ul>
                         {foreach $submitted_data as $data}
-                            <li><strong>{$data.label}:</strong>
+                            <li>
+                            	<strong>{$data.label}:</strong>
 	                            {if eq('owFormFile', $data.type)}
 	                                 <img src={$data.value.upload_file_path|ezroot()} />
 	                            {else}
-	                                <span>{$data.value}</span></li>
+	                                <span>{$data.value}</span>
 	                            {/if}
                             </li>
                         {/foreach}
                     </ul>
-                </div>
+				</div>
             </div>
         </div>
     </div>
