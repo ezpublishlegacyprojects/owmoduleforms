@@ -2,5 +2,6 @@
 
 [RoleSettings]
 PolicyOmitList[]=owmoduleformssamples/register
+PolicyOmitList[]=owmoduleformssamples/calculator
 
 */ ?>

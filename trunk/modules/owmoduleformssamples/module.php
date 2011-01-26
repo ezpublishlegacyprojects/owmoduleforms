@@ -5,9 +5,9 @@ $Module = array( 'name' => 'owFormTest',
 
 $ViewList = array();
 
-$ViewList['tipafriend'] = array(
-    'script' => 'tipafriend.php',
-    'params' => array(  ),
+$ViewList['calculator'] = array(
+    'script' => 'calculator.php',
+    'params' => array(),
 );
 
 $ViewList['register'] = array(

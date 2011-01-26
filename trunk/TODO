@@ -1,0 +1,3 @@
+faire en sorte qu'on puisse facilement attacher une fonction submit pour l'affichage du résultat.
+Il faudrait pouvoir choisir le template du résultat et que les variables récupérées et définies dans le 
+"doProcess" se retrouve automatiquement dans le template de résultat.

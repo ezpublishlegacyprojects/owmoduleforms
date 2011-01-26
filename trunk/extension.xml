@@ -9,9 +9,9 @@
     </metadata>
 
     <dependencies>
-        <requires>
+        <extends>
             <extension name="ezjscore" />
-        </requires>
+        </extends>
         <extends>
             <extension name="ezwebin" />
         </extends>

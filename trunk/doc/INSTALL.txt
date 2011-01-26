@@ -33,7 +33,7 @@ Installing OW Module Forms extension
 
 3. Unpack the files in the distribution.
 
-   Windows users should unzip the files. The 'ezoe' directory will be created
+   Windows users should unzip the files. The 'owmoduleforms' directory will be created
    inside the 'extension' directory.
 
    Linux users may use of the following commands depending on the file type:
@@ -44,7 +44,7 @@ Installing OW Module Forms extension
    [zip]:
    $ unzip owmoduleforms-[ExtensionVersion].zip
 
-4. Enable the ezoe extension in eZ Publish.
+4. Enable the owmoduleforms extension in eZ Publish.
 
    To enable owmoduleforms for all of your siteaccesses, log in to your eZ Publish
    administration interface, click on the 'Setup' tab, and then click
@@ -57,13 +57,6 @@ Installing OW Module Forms extension
    ActiveExtensions[]=owmoduleforms
 
    Create the file and/or the section if they do not exist.
-
-   To make owmoduleforms works fine with ezjscore, owmoduleforms must be enabled after ezjscore extension.
-   The final result must follow the following principle : 
-   
-     [ExtensionSettings]
-     ActiveExtensions[]=ezjscore
-     ActiveExtensions[]=owmoduleforms
 
 5. Regenerate autoload array
 

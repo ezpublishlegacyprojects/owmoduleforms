@@ -7,4 +7,7 @@ FunctionList[]=ezjscowforms
 Class=ezjscOwFormServerFunctions
 File=extension/owmoduleforms/classes/ezjscowformserverfunctions.php
 
+[eZJSCore]
+PreferredLibrary=jquery
+
 */ ?>
