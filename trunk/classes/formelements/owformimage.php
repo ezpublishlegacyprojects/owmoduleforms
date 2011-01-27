@@ -3,6 +3,8 @@
 class owFormImage extends owFormInput
 {
 
+    var $type='image';
+    
     public function __construct($options=array())
     {
         $this->checkForRequiredOption('src', $options);

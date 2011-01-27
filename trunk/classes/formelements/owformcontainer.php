@@ -3,6 +3,7 @@
 class owFormContainer extends owFormElement
 {
     var $form_elements;
+    var $type='container';
 
     public function __construct($options=array())
     {

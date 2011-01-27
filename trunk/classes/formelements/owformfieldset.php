@@ -3,6 +3,8 @@
 class owFormFieldset extends owFormContainer
 {
 
+    var $type='fieldset';
+    
     public function __construct($options=array())
     {
         parent::__construct($options);

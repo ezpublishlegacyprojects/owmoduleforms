@@ -2,6 +2,7 @@
 
 class owFormDatetime extends owFormFieldset
 {
+    var $type='datetime';
     
     public function __construct($options=array())
     {

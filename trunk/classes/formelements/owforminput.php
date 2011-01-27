@@ -5,6 +5,7 @@ abstract class owFormInput extends owFormElement
     var $http;
     var $options;
     var $value;
+    var $type = 'input';
 
     public function __construct($options=array())
     {
@@ -17,11 +18,11 @@ abstract class owFormInput extends owFormElement
         $html_common_input_attributes = array(
             'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onmousedown', 'onmousemove', 'onmouseout',
             'onmouseover', 'onmouseup', 'onkeydown', 'onkeypress', 'onkeyup', 'onselect','disabled', 'size', 'name'
-            );
+        );
 
-            $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
-            $this->http = eZHTTPTool::instance();
-            $this->value = $this->getOption('default');
+        $this->available_html_attributes = array_merge($this->available_html_attributes, $html_common_input_attributes);
+        $this->http = eZHTTPTool::instance();
+        $this->value = $this->getOption('default');
     }
 
     public function checkRequired()
