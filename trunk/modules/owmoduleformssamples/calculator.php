@@ -1,5 +1,18 @@
 <?php
 
+class calculatorSubmit extends owFormSubmit
+{
+    public function __construct()
+    {
+        parent::__construct(array('template_path' => 'owmoduleformssamples/calculator_submit.tpl'));
+    }
+
+    public function setVariablesToTemplate($form, $tpl)
+    {
+        $tpl->setVariable('result', $form->getResult());
+    }
+}
+
 class calculatorForm extends owForm
 {
     var $result;
@@ -10,14 +23,14 @@ class calculatorForm extends owForm
         array(
             	'name' => 'first_operand',
             	'label' => 'First operand',
-                'validation' => array('owFloatValidator' => array()),
+                'validation' => array('owIntegerValidator' => array()),
         )
         );
         $second_operand = new owFormText(
         array(
             	'name' => 'second_operand',
             	'label' => 'Second operand',
-                'validation' => array('owFloatValidator' => array()),
+                'validation' => array('owIntegerValidator' => array()),
         )
         );
         $operator = new owFormSelect(
@@ -69,6 +82,16 @@ class calculatorForm extends owForm
             }
         }
         $this->result = $result;
+    }
+
+    public function getResult()
+    {
+        return $this->result;
+    }
+    
+    function getSubmitButton()
+    {
+        return new calculatorSubmit();
     }
 
 }
