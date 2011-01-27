@@ -68,10 +68,15 @@ abstract class owForm extends owFormContainer
         $this->addFormElement($this->token_form_element);
     }
 
+    function getSubmitButton()
+    {
+        return new owFormSubmit();
+    }
+    
     private function initButtons()
     {
         $buttons_group = new owFormContainer(array('class' => 'buttonblock block float-break'));
-        $buttons_group->addFormElement(new owFormSubmit());
+        $buttons_group->addFormElement($this->getSubmitButton());
         $buttons_group->addFormElement(new owFormCancel(array('module' => $this->getOption('module'))));
         $this->addFormElement($buttons_group);
     }
