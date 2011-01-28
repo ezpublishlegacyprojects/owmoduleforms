@@ -1,2 +1,0 @@
-tester les caractères spéciaux dans les inputs. il faut surtout régler le problème des valeurs avec des guillemets.
-On peut les échapper avec addslashes et stripslashes mais ça ne règle pas le problème de l'insertion dans le fichier tpl
